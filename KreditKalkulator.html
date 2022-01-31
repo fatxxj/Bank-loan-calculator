@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kredit Kalkulator</title>
+    <title>Kredit Kalkulator by Fat Halimi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="jquery/jquery/jquery-ui.css">
     <script src="jquery/jquery/jquery.js"></script>
@@ -14,9 +14,9 @@
 
 
     <script type="text/javascript">
+///////////////////////
 
-    
-       
+
         $(document).ready(function () {
 
             var flag = 0;
@@ -121,8 +121,23 @@
         }
 
         .totalInstallments {
-            margin-bottom: 2px;
+            margin-bottom: 1vw;
             margin-left: 4px;
+        }
+
+        input
+        {
+            display: block;
+
+        }
+        @media only screen and (max-width: 599px) {
+            input, #TotalreturnAmtWithInterest, #returnAmt {
+                width: 100%;
+            }
+            .display-6.custom
+            {
+                text-align: center;
+            }
         }
 
 
@@ -136,36 +151,36 @@
 
 <body>
 
-<div class="container">
+<div class="container ">
     <br>
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12">
             <div class="display-6">Bank Loan Calculator</div>
         </div>
     </div>
-    <div class="row text-start ">
-        <div class="col-sm-7 col-md-7 col-lg-7 col-7"><br>
+    <div class="row  ">
+        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
             <p class="display-6 custom">Insert loan amount</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-5 col-5 text-end "><br>
+        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
             <input type="number" min="0" placeholder="Insert number" id="totalLoan">
         </div>
     </div>
-    <div class="row text-start">
-        <div class="col-sm-7 col-md-7 col-lg-7 col-7 "><br>
+    <div class="row justify-content-around">
+        <div class="col-sm-7 col-md-7 col-lg-8 col-12 "><br>
             <p class="display-6 custom">Insert number of installments by months <i><u>or</u></i> by years</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-5 col-5 text-end"><br>
+        <div class="col-sm-5 col-md-5 col-lg-4 col-12 "><br>
             <input type="number" min="0" placeholder="Number of years" class="totalInstallments" id="years">
             <input type="number" min="0" placeholder="Number of months" class=" totalInstallments" id="months">
 
         </div>
     </div>
-    <div class="row text-start">
-        <div class="col-sm-7 col-md-7 col-lg-7 col-7"><br>
+    <div class="row ">
+        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
             <p class="display-6 custom">Interest percentage</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-5 col-5 text-end "><br>
+        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
             <input type="text" placeholder="%" id="interest">
         </div>
     </div>
@@ -176,40 +191,43 @@
     </div>
 
     <div id="result">
-        <div class="row text-start">
-            <div class="col-sm-7 col-md-7 col-lg-7 col-7"><br>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
                 <p class="display-6 custom">Total return amount after interest calculation</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5 col-5 text-end "><br>
+            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
                 <input type="text" placeholder="" id="TotalreturnAmtWithInterest">
             </div>
         </div>
-        <div class="row text-start">
-            <div class="col-sm-7 col-md-7 col-lg-7 col-7"><br>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
                 <p class="display-6 custom">Monthly installment amount</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5 col-5 text-end "><br>
+            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
                 <input type="text" placeholder="" id="returnAmt">
             </div>
         </div>
 
         <div class="row">
 
-            <div class="col-sm-12 col-lg-12 col-md-12">
-                <button onclick="window.print()" class="btn btn-outline-secondary float-end" id="printbutton1">Print
-                    report
-                </button>
-                <button class="btn btn-outline-secondary float-start" id="calculateAgain">Calculate again
+            <div class="col-sm-7 col-md-7 col-lg-7 col-6"><br>
+                <button class="btn btn-outline-secondary " id="calculateAgain">Calculate again
                 </button>
             </div>
+            <div class="col-sm-5 col-md-5 col-lg-5 col-6 text-end "><br>
+                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print
+                    report
+                </button>
+
+            </div>
+
+
 
         </div>
 
 
     </div>
-    <div class="loader-wrapper">
-        <span class="loader"><span class="loader-inner"></span></span>
-    </div>
+
 </div>
 
 
