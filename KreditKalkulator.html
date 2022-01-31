@@ -12,15 +12,17 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 
-
     <script type="text/javascript">
-///////////////////////
+        ///////////////////////
 
 
         $(document).ready(function () {
 
             var flag = 0;
             $("#result").hide()
+
+
+
 
             $("#calculate").click(function () {
                 if ($("#totalLoan").val() === "") {
@@ -36,37 +38,31 @@
                 if ($("#interest").val() === "")
                     alert("Interest is required")
                 else flag++;
-                if ($("#interest").val() < 0)
-                {
+                if ($("#interest").val() < 0) {
                     alert("There is no such thing as negative interest percentage")
                     flag--
                 }
 
 
 
-
-
-                if (flag == 3)
-                {
+                if (flag == 3) {
                     //$("#result").show()
 
-                        $( this ).css({
-                            borderStyle: "inset",
-                            cursor: "wait"
-                        });
-                        $( "#result" ).slideDown( 1000, function() {
-                            $( this )
+                    $(this).css({
+                        borderStyle: "inset",
+                        cursor: "wait"
+                    });
+                    $("#result").slideDown(1000, function () {
+                        $(this)
 
-                                .filter( ".middle" )
-                                .css( "background", "yellow" )
-                                .focus();
+                            .filter(".middle")
+                            .css("background", "yellow")
+                            .focus();
 
-                        });
+                    });
 
 
-                }
-
-                else {
+                } else {
                     $("#totalLoan").val("")
                     $(".totalInstallments").val("")
                     $("#interest").val("")
@@ -102,12 +98,17 @@
 
                 $("#returnAmt").val(totalRata.toFixed(2) + " Euro")
 
-                $("#calculateAgain").click(function ()
-                {
+                $("#calculateAgain").click(function () {
                     location.reload()
 
                 })
 
+            })
+
+            $("#gjuha").change(function (){
+                if($(this).val()==='1'){
+                    window.open("KreditKalkulatorAL.html","_self")
+                }
             })
 
 
@@ -125,25 +126,25 @@
             margin-left: 4px;
         }
 
-        input
-        {
+        input {
             display: block;
 
         }
+
         @media only screen and (max-width: 599px) {
             input, #TotalreturnAmtWithInterest, #returnAmt {
                 width: 100%;
             }
-            .display-6.custom
-            {
+
+            .display-6.custom {
                 text-align: center;
             }
         }
 
 
+
     </style>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
 
 
 </head>
@@ -153,11 +154,25 @@
 
 <div class="container ">
     <br>
+    <div class="row text-end">
+        <div class="col">
+            <label for="gjuha">Change Language</label><br>
+
+            <select name="gjuha" id="gjuha"   >
+                <option  value="bosh">English</option>
+                <option id="shqip" value="1"> Shqip</option>
+            </select>
+        </div>
+
+    </div>
+    <br>
+
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12">
             <div class="display-6">Bank Loan Calculator</div>
         </div>
     </div>
+    <br>
     <div class="row  ">
         <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
             <p class="display-6 custom">Insert loan amount</p>
@@ -181,7 +196,7 @@
             <p class="display-6 custom">Interest percentage</p>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
-            <input type="text" placeholder="%" id="interest">
+            <input type="number" placeholder="%" id="interest" min="0">
         </div>
     </div>
     <div class="row text-center">
@@ -222,13 +237,15 @@
             </div>
 
 
-
         </div>
 
 
     </div>
 
 </div>
+
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
