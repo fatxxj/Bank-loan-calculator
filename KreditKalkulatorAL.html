@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kredit Kalkulator by Fat Halimi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="jquery/jquery/jquery-ui.css">
+    <script src="jquery/jquery/jquery.js"></script>
+    <script src="jquery/jquery/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <script type="text/javascript">
+        ///////////////////////
+
+
+        $(document).ready(function () {
+
+            var flag = 0;
+            $("#result").hide()
+
+
+
+
+            $("#calculate").click(function () {
+                if ($("#totalLoan").val() === "") {
+                    alert("Sasia e kredisë është e patjetërsueshme")
+
+                } else
+                    flag++;
+
+                if ($("#months").val() == "" && $("#years").val() === "")
+                    alert("Numri i ratave mujore është i patjetërsueshëm")
+                else flag++;
+
+                if ($("#interest").val() === "")
+                    alert("Vlera e interesit bankar është e patjetërsueshme")
+                else flag++;
+
+
+
+
+                if (flag == 3) {
+                    //$("#result").show()
+
+                    $(this).css({
+                        borderStyle: "inset",
+                        cursor: "wait"
+                    });
+                    $("#result").slideDown(1000, function () {
+                        $(this)
+
+                            .filter(".middle")
+                            .css("background", "yellow")
+                            .focus();
+
+                    });
+
+
+                } else {
+                    $("#totalLoan").val("")
+                    $(".totalInstallments").val("")
+                    $("#interest").val("")
+
+                }
+                interest = parseInt($("#interest").val()) / 100
+                monthlyWithInterest = parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest
+
+                totalRata = 0;
+
+                //if both month and year are inputed
+                if ($("#months").val() != "" && $("#years").val() != "" && parseInt($("#months").val()) !== 0 && parseInt($("#years").val()) !== 0) {
+                    yearToMonth = parseInt($("#years").val()) * 12
+                    month = parseInt($("#months").val())
+                    yearAndMonth = yearToMonth + month
+
+                    totalRata = monthlyWithInterest / yearAndMonth
+
+                }
+
+
+                //if year is inputed and month is empty or 0
+                else if ($("#years").val() != "" && $("#months").val() == "" || parseInt($("#months").val()) == 0) {
+                    totalRata = monthlyWithInterest / (parseInt($("#years").val()) * 12);
+                }
+
+                //if month is inputed and year is empty or 0
+
+                else if ($("#months").val() != "" && $("#years").val() == "" || parseInt($("#years").val()) == 0)
+                    totalRata = monthlyWithInterest / parseInt($("#months").val())
+
+                withInterest = $("#TotalreturnAmtWithInterest").val((parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest).toFixed(2) + " Euro")
+
+                $("#returnAmt").val(totalRata.toFixed(2) + " Euro")
+
+                $("#calculateAgain").click(function () {
+                    location.reload()
+
+                })
+
+            })
+
+            $("#gjuha").change(function (){
+                if($(this).val()==='1'){
+                    window.open("KreditKalkulator.html","_self")
+                }
+            })
+
+
+        })
+
+
+    </script>
+    <style>
+        .display-6.custom {
+            font-size: 25px;
+        }
+
+        .totalInstallments {
+            margin-bottom: 1vw;
+            margin-left: 4px;
+        }
+
+        input {
+            display: block;
+
+        }
+
+        @media only screen and (max-width: 599px) {
+            input, #TotalreturnAmtWithInterest, #returnAmt {
+                width: 100%;
+            }
+
+            .display-6.custom {
+                text-align: center;
+            }
+        }
+
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+
+</head>
+
+
+<body>
+
+<div class="container ">
+    <br>
+    <div class="row text-end">
+        <div class="col">
+            <label for="gjuha">Ndro gjuhën</label><br>
+
+            <select name="gjuha" id="gjuha"   >
+                <option  value="bosh">Shqip</option>
+                <option id="shqip" value="1">English </option>
+            </select>
+        </div>
+
+    </div>
+    <br>
+
+    <div class="row text-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-12">
+            <div class="display-6">Kalkulator për kredit bankar</div>
+        </div>
+    </div>
+    <br>
+    <div class="row  ">
+        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+            <p class="display-6 custom">Sasia e kredisë</p>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+            <input type="number" min="0" placeholder="Fut vlerën" id="totalLoan">
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div class="col-sm-7 col-md-7 col-lg-8 col-12 "><br>
+            <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëygjatjen vjetore</p>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-4 col-12 "><br>
+            <input type="number" min="0" placeholder="Kohëzgjatja vjetore" class="totalInstallments" id="years">
+            <input type="number" min="0" placeholder="Kohëzgjatja mujore" class=" totalInstallments" id="months">
+
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+            <p class="display-6 custom">Sasia e interesit bankar në vlerë perqindjeje</p>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+            <input type="number" placeholder="%" id="interest" min="0">
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-12"><br>
+            <button class="btn btn-outline-secondary" id="calculate">Kalkulo</button>
+        </div>
+    </div>
+
+    <div id="result">
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+                <p class="display-6 custom">Sasia totale pas kalkulimit të interesit bankar</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+                <input type="text" placeholder="" id="TotalreturnAmtWithInterest">
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+                <p class="display-6 custom">Sasia e një rate mujore</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+                <input type="text" placeholder="" id="returnAmt">
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-7 col-md-7 col-lg-7 col-6"><br>
+                <button class="btn btn-outline-secondary " id="calculateAgain">Kalkulo përsëri
+                </button>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5 col-6 text-end "><br>
+                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Printo raportin
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>
