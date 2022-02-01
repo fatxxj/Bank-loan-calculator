@@ -20,6 +20,7 @@
 
             var flag = 0;
             $("#result").hide()
+            $("#hrID").hide()
 
 
 
@@ -44,7 +45,7 @@
 
                 if (flag == 3) {
                     //$("#result").show()
-
+                $("#hrID").show()
                     $(this).css({
                         borderStyle: "inset",
                         cursor: "wait"
@@ -99,8 +100,11 @@
                     location.reload()
 
                 })
+                $("#totalInteres").val(( parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) +" Euro")
 
             })
+
+
 
             $("#gjuha").change(function (){
                 if($(this).val()==='1'){
@@ -166,33 +170,34 @@
 
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12">
-            <div class="display-6">Kalkulator për kredit bankar</div>
+            <div class="display-6">Kalkulator për kredi bankare</div>
         </div>
     </div>
     <br>
     <div class="row  ">
-        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
             <p class="display-6 custom">Sasia e kredisë</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
             <input type="number" min="0" placeholder="Fut vlerën" id="totalLoan">
         </div>
+
     </div>
     <div class="row justify-content-around">
-        <div class="col-sm-7 col-md-7 col-lg-8 col-12 "><br>
-            <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëygjatjen vjetore</p>
+        <div class="col-sm-7 col-md-7 col-lg-9 col-12 "><br>
+            <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-4 col-12 "><br>
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12 "><br>
             <input type="number" min="0" placeholder="Kohëzgjatja vjetore" class="totalInstallments" id="years">
             <input type="number" min="0" placeholder="Kohëzgjatja mujore" class=" totalInstallments" id="months">
 
         </div>
     </div>
     <div class="row ">
-        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
             <p class="display-6 custom">Sasia e interesit bankar në vlerë perqindjeje</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
             <input type="number" placeholder="%" id="interest" min="0">
         </div>
     </div>
@@ -203,19 +208,33 @@
     </div>
 
     <div id="result">
+        <hr id="hrID">
+        <div class="row text-center">
+            <div class="col-">
+                <div class="display-6">Rezultati i kalkulimit</div>
+            </div>
+        </div>
         <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Sasia totale e interesit bankar</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
+                <input type="text" placeholder="" id="totalInteres">
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Sasia totale pas kalkulimit të interesit bankar</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
                 <input type="text" placeholder="" id="TotalreturnAmtWithInterest">
             </div>
         </div>
         <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Sasia e një rate mujore</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
                 <input type="text" placeholder="" id="returnAmt">
             </div>
         </div>
@@ -229,7 +248,7 @@
             <div class="col-sm-5 col-md-5 col-lg-5 col-6 text-end "><br>
                 <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Printo raportin
                 </button>
-
+<br><br>
             </div>
 
 
