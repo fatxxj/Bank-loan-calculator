@@ -17,6 +17,7 @@
 
 
         $(document).ready(function () {
+            $("#hrID").hide()
 
             var flag = 0;
             $("#result").hide()
@@ -47,7 +48,7 @@
 
                 if (flag == 3) {
                     //$("#result").show()
-
+                    $("#hrID").show()
                     $(this).css({
                         borderStyle: "inset",
                         cursor: "wait"
@@ -102,6 +103,9 @@
                     location.reload()
 
                 })
+
+
+                $("#totalInteres").val(( parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) +" Euro")
 
             })
 
@@ -174,28 +178,28 @@
     </div>
     <br>
     <div class="row  ">
-        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
             <p class="display-6 custom">Insert loan amount</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
             <input type="number" min="0" placeholder="Insert number" id="totalLoan">
         </div>
     </div>
     <div class="row justify-content-around">
-        <div class="col-sm-7 col-md-7 col-lg-8 col-12 "><br>
+        <div class="col-sm-7 col-md-7 col-lg-9 col-12 "><br>
             <p class="display-6 custom">Insert number of installments by months <i><u>or</u></i> by years</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-4 col-12 "><br>
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12 "><br>
             <input type="number" min="0" placeholder="Number of years" class="totalInstallments" id="years">
             <input type="number" min="0" placeholder="Number of months" class=" totalInstallments" id="months">
 
         </div>
     </div>
     <div class="row ">
-        <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
             <p class="display-6 custom">Interest percentage</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
             <input type="number" placeholder="%" id="interest" min="0">
         </div>
     </div>
@@ -206,19 +210,33 @@
     </div>
 
     <div id="result">
+        <hr id="hrID">
+        <div class="row text-center">
+            <div class="col-">
+                <div class="display-6">Calculation result</div>
+            </div>
+        </div>
         <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Interes amount</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
+                <input type="text" placeholder="" id="totalInteres">
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Total return amount after interest calculation</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
                 <input type="text" placeholder="" id="TotalreturnAmtWithInterest">
             </div>
         </div>
         <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-8 col-12"><br>
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Monthly installment amount</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-4 col-12  "><br>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
                 <input type="text" placeholder="" id="returnAmt">
             </div>
         </div>
@@ -232,7 +250,7 @@
             <div class="col-sm-5 col-md-5 col-lg-5 col-6 text-end "><br>
                 <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print
                     report
-                </button>
+                </button><br><br>
 
             </div>
 
