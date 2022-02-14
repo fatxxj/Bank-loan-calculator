@@ -23,8 +23,6 @@
             $("#result").hide()
 
 
-
-
             $("#calculate").click(function () {
                 if ($("#totalLoan").val() === "") {
                     alert("Loan amount is required")
@@ -43,7 +41,6 @@
                     alert("There is no such thing as negative interest percentage")
                     flag--
                 }
-
 
 
                 if (flag == 3) {
@@ -105,13 +102,13 @@
                 })
 
 
-                $("#totalInteres").val(( parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) +" Euro")
+                $("#totalInteres").val((parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) + " Euro")
 
             })
 
-            $("#gjuha").change(function (){
-                if($(this).val()==='1'){
-                    window.open("KreditKalkulatorAL.html","_self")
+            $("#gjuha").change(function () {
+                if ($(this).val() === '1') {
+                    window.open("KreditKalkulatorAL.html", "_self")
                 }
             })
 
@@ -135,6 +132,66 @@
 
         }
 
+
+        .input-group-text {
+            background-color: white;
+
+        }
+
+        .input-group-text.C {
+            margin: 5px;
+            margin-right: 0px;
+            display: inline-block;
+        }
+
+
+
+        @media only screen and (max-width: 480px) {
+            .input-group-text {
+                width: 100%;
+                height: 15vw;
+                font-size: 18.5px;
+                font-style: italic;
+            }
+
+
+            .display-6.custom {
+                text-align: center;
+            }
+
+            .btn-outline-secondary {
+                width: 50%;
+                height: 75%;
+                text-align: center;
+            }
+            #calculateAgain, #printbutton1
+            {
+                height: 13vw;
+                width: 50%;
+                text-align: center;
+                justify-content: center;
+                margin-top: 2.5vw;
+
+            }
+
+            .input-group-text.euro {
+                width: 13vw;
+                height: 15vw;
+                font-size: 18.5px;
+                font-style: italic;
+                justify-content: center;
+            }
+
+            .form-control {
+                width: 80%;
+            }
+
+            .input-group-text.decimal {
+                width: 15vw;
+            }
+
+        }
+
         @media only screen and (max-width: 599px) {
             input, #TotalreturnAmtWithInterest, #returnAmt {
                 width: 100%;
@@ -145,6 +202,69 @@
             }
         }
 
+
+        @media only screen and (min-width: 750px) {
+            .btn-outline-secondary {
+                height: 6vw;
+                width: 20vw;
+            }
+
+
+            .display-6.custom {
+                font-size: 22px;
+            }
+
+            /*.d-flex.C.justify-content-end*/
+            /*{*/
+            /*    height: 5vw*/
+            /*    */
+            /*}*/
+            .d-flex.C {
+                height: 5vw;
+            }
+        }
+
+        @media only screen and (min-width: 1515px) {
+            .btn-outline-secondary {
+                height: 4vw;
+                width: 10vw;
+            }
+
+            .input-group-text, .form-control {
+                height: 3vw;
+            }
+
+            .display-6.custom {
+                font-size: 28px;
+            }
+        }
+
+
+        .form-control, .input-group-text {
+            text-align: center;
+            font-style: italic;
+        }
+
+
+        .form-control:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            border-right-color: lightgray;
+            outline: 0;
+            box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0);
+            text-align: center;
+
+        }
+
+        .input-group-text:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0);
+            text-align: center;
+        }
 
 
     </style>
@@ -162,8 +282,8 @@
         <div class="col">
             <label for="gjuha">Change Language</label><br>
 
-            <select name="gjuha" id="gjuha"   >
-                <option  value="bosh">English</option>
+            <select name="gjuha" id="gjuha">
+                <option value="bosh">English</option>
                 <option id="shqip" value="1"> Shqip</option>
             </select>
         </div>
@@ -181,33 +301,50 @@
         <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
             <p class="display-6 custom">Insert loan amount</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-            <input type="number" min="0" placeholder="Insert number" id="totalLoan">
-        </div>
-    </div>
-    <div class="row justify-content-around">
-        <div class="col-sm-7 col-md-7 col-lg-9 col-12 "><br>
-            <p class="display-6 custom">Insert number of installments by months <i><u>or</u></i> by years</p>
-        </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12 "><br>
-            <input type="number" min="0" placeholder="Number of years" class="totalInstallments" id="years">
-            <input type="number" min="0" placeholder="Number of months" class=" totalInstallments" id="months">
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+            <div class="input-group mb-3 text-end">
 
+                <input type="number" class="form-control" id="totalLoan" aria-label="Amount (to the nearest dollar)"
+                       placeholder="1000"
+                       max="10">
+                <span class="input-group-text euro" style="background-color: lightgray">	&euro;</span>
+
+                <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+            </div>
         </div>
     </div>
     <div class="row ">
+        <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+            <p class="display-6 custom">Insert number of installments by months <i><u>or</u></i> by years</p>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+            <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years">
+            <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months">
+
+        </div>
+    </div>
+    <div class="row  ">
         <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
             <p class="display-6 custom">Interest percentage</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-            <input type="number" placeholder="%" id="interest" min="0">
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+            <div class="input-group mb-3 text-end">
+                <input type="text" class="form-control" id="interest" aria-label="Amount (to the nearest dollar)"
+                       placeholder="%"
+                       max="10">
+                <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+            </div>
         </div>
     </div>
+
+
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12"><br>
             <button class="btn btn-outline-secondary" id="calculate">Calculate</button>
         </div>
     </div>
+    <br><br>
 
     <div id="result">
         <hr id="hrID">
@@ -217,53 +354,52 @@
             </div>
         </div>
         <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+            <div class="col-sm-7 col-md-6 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Interes amount</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-                <input type="text" placeholder="" id="totalInteres">
+            <div class="col-sm-5 col-md-6 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
+                <input readonly class="input-group-text" type="text" placeholder="" id="totalInteres">
             </div>
         </div>
         <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+            <div class="col-sm-7 col-md-6 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Total return amount after interest calculation</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-                <input type="text" placeholder="" id="TotalreturnAmtWithInterest">
+            <div class="col-sm-5 col-md-6 col-lg-3 col-12  d-flex C justify-content-end align-items-end  "><br>
+                <input readonly class="input-group-text" type="text" placeholder="" id="TotalreturnAmtWithInterest">
             </div>
         </div>
         <div class="row ">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
                 <p class="display-6 custom">Monthly installment amount</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-                <input type="text" placeholder="" id="returnAmt">
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
+                <input readonly class="input-group-text" type="text" placeholder="" id="returnAmt">
             </div>
         </div>
+        <br><br>
+        <div class="row d-flex justify-content-center">
 
-        <div class="row">
-
-            <div class="col-sm-7 col-md-7 col-lg-7 col-6"><br>
+            <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex justify-content-center"><br>
                 <button class="btn btn-outline-secondary " id="calculateAgain">Calculate again
                 </button>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5 col-6 text-end "><br>
+            <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex  justify-content-center"><br>
                 <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print
                     report
-                </button><br><br>
+                </button>
+                <br><br>
 
             </div>
 
 
         </div>
+        <br><br>
 
 
     </div>
 
 </div>
-
-
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
