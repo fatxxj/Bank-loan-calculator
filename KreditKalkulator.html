@@ -22,8 +22,83 @@
             var flag = 0;
             $("#result").hide()
 
+            $("#flexSwitchCheckDefault").change(function () {
+                 variableInteres = $(this).is(':checked');
+                if (variableInteres === true) {
+                  //  console.log("variableInteres")
+                    $("#customKamata").show()
+                    $("#fixedInteres").hide()
+
+
+                } else {
+                    // do 'false' stuff, like disabling a 'Continue' button
+                    //console.log("fixedInteres")
+                    $("#fixedInteres").show()
+                    $("#customKamata").hide()
+
+
+                }
+            })
+
+            $("#customKamata").hide()
+            $("#flexSwitchCheckDefault").change(function () {
+                 variableInteres = $(this).is(':checked');
+                if (variableInteres === true) {
+                    //console.log("variableInteres")
+                    $("#customKamata").show()
+                    $("#fixedInteres").hide()
+                    $("span#switchCheck").text("Fixed interest percentage")
+                } else {
+                    // do 'false' stuff, like disabling a 'Continue' button
+                   // console.log("fixedInteres")
+                    $("#fixedInteres").show()
+                    $("span#switchCheck").text("Variable interest percentage")
+                }
+            })
+
+            //calculations for both scenarios
+
+
+
+
+
+
 
             $("#calculate").click(function () {
+
+
+                    variableInteres = $("#flexSwitchCheckDefault").is(':checked');
+                    if (variableInteres === true) {
+                        //  console.log("variableInteres")
+                        $("#customKamata").show()
+                        $("#fixedInteres").hide()
+                        // dynamic input field
+
+
+                        totalYearsLoan = parseInt($("#years1").val())*12 + parseInt($("#months1").val())
+                        console.log(totalYearsLoan)
+
+
+                        input=$("<input type='text' min='0' placeholder='Number of years' class='input-group-text C' >")
+                        input.val(totalYearsLoan)
+                        input.appendTo("#customKamata")
+
+                        //end of dynamic input field
+
+
+                    } else { //fixed interes
+                        // do 'false' stuff, like disabling a 'Continue' button
+                        //console.log("fixedInteres")
+
+
+
+
+                    }
+
+
+
+
+
                 if ($("#totalLoan").val() === "") {
                     alert("Loan amount is required")
 
@@ -34,13 +109,24 @@
                     alert(" Number of installments either by month either by year is required")
                 else flag++;
 
-                if ($("#interest").val() === "")
-                    alert("Interest is required")
-                else flag++;
-                if ($("#interest").val() < 0) {
-                    alert("There is no such thing as negative interest percentage")
-                    flag--
+
+
+                variableInteres = $("#flexSwitchCheckDefault").is(':checked');
+                if (variableInteres === false) {
+                    if ($("#interest").val() === "")
+                        alert("Interest is required")
+                    else flag++;
+                } else {
+
+                    if ($("#interest1").val() === "")
+                        alert("Custom interest amount is required")
+                    else flag++;
+                    if ($("#years1").val() === "" && $("#months1").val()==="")
+                        alert("At least one of the custom fields for year and month is required")
+
                 }
+
+
 
 
                 if (flag == 3) {
@@ -66,44 +152,62 @@
                     $("#interest").val("")
 
                 }
+
+
                 interest = parseInt($("#interest").val()) / 100
                 monthlyWithInterest = parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest
-
+                yearAndMonth = 0;
                 totalRata = 0;
+
+
 
                 //if both month and year are inputed
                 if ($("#months").val() != "" && $("#years").val() != "" && parseInt($("#months").val()) !== 0 && parseInt($("#years").val()) !== 0) {
                     yearToMonth = parseInt($("#years").val()) * 12
                     month = parseInt($("#months").val())
                     yearAndMonth = yearToMonth + month
-
                     totalRata = monthlyWithInterest / yearAndMonth
+                    ///////
+
+                    logic1 = 1;
+
 
                 }
 
 
+
+
                 //if year is inputed and month is empty or 0
                 else if ($("#years").val() != "" && $("#months").val() == "" || parseInt($("#months").val()) == 0) {
+                    yearAndMonth = (parseInt($("#years").val()) * 12);
                     totalRata = monthlyWithInterest / (parseInt($("#years").val()) * 12);
                 }
 
                 //if month is inputed and year is empty or 0
 
-                else if ($("#months").val() != "" && $("#years").val() == "" || parseInt($("#years").val()) == 0)
+                else if ($("#months").val() != "" && $("#years").val() == "" || parseInt($("#years").val()) == 0) {
                     totalRata = monthlyWithInterest / parseInt($("#months").val())
+                    yearAndMonth = parseInt($("#months").val())
+                }
+
+
+                // input = $(" <input type='text' readonly min='0'  class='input-group-text C'  >")
+                // input.val(yearAndMonth)
+                // input.appendTo("#customKamata")
+
+                console.log(yearAndMonth)
+
 
                 withInterest = $("#TotalreturnAmtWithInterest").val((parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest).toFixed(2) + " Euro")
 
                 $("#returnAmt").val(totalRata.toFixed(2) + " Euro")
 
+                $("#totalInteres").val((parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) + " Euro")
+
                 $("#calculateAgain").click(function () {
                     location.reload()
 
                 })
-
-
-                $("#totalInteres").val((parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) + " Euro")
-
             })
 
             $("#gjuha").change(function () {
@@ -111,6 +215,97 @@
                     window.open("KreditKalkulatorAL.html", "_self")
                 }
             })
+
+            // $('#interest').on('input', function () {
+            //
+            //     if ($("#interest").val() !== "") {
+            //         $("#years1, #months1, #interest1 ").attr('disabled', 'disabled');
+            //         isDisabledFinalExam = 1 //gets disabled when points entered for first exam
+            //         console.log(isDisabledFinalExam)
+            //         $("#years1, #months1 , #interest1").css("background-color", "lightgray")
+            //
+            //
+            //     }
+            //
+            //     if ($("#interest").val() === "") {
+            //         $("#years1, #months1, #interest1  ").attr('enabled', 'enabled');
+            //         isDisabledFinalExam = 0 //undo disable when first exam is empty
+            //         console.log(isDisabledFinalExam)
+            //         $("#years1, #months1 , #interest1 ").css("background-color", "white")
+            //
+            //
+            //     }
+            //
+            // });
+
+
+            // $('#years1, #months1, #interest1').on('input', function () {
+            //
+            //     if ($("#years1, #months1, #interest1").val() !== "") {
+            //         $("#interest").attr('disabled', 'disabled');
+            //         isDisabledFinalExam = 1 //gets disabled when points entered for first exam
+            //         console.log(isDisabledFinalExam)
+            //         $("#interest").css("background-color", "lightgray")
+            //
+            //
+            //     }
+            //
+            //     if ($("#years1, #months1, #interest1").val() === "") {
+            //         $("#interest").attr('enabled', 'enabled');
+            //         isDisabledFinalExam = 0 //undo disable when first exam is empty
+            //         console.log(isDisabledFinalExam)
+            //         $("#interest ").css("background-color", "white")
+            //
+            //
+            //     }
+            //
+            // });
+            //
+            // $('#months1').on('input', function () {
+            //
+            //     if ($(" #months1").val() !== "") {
+            //         $("#interest").attr('disabled', 'disabled');
+            //         isDisabledFinalExam = 1 //gets disabled when points entered for first exam
+            //         console.log(isDisabledFinalExam)
+            //         $("#interest").css("background-color", "lightgray")
+            //
+            //
+            //     }
+            //
+            //     if ($("#months1").val() === "") {
+            //         $("#interest").attr('enabled', 'enabled');
+            //         isDisabledFinalExam = 0 //undo disable when first exam is empty
+            //         console.log(isDisabledFinalExam)
+            //         $("#interest ").css("background-color", "white")
+            //
+            //
+            //     }
+            //
+            // });
+            //
+            // $(' #interest1').on('input', function () {
+            //
+            //     if ($(" #interest1").val() !== "") {
+            //         $("#interest").attr('disabled', 'disabled');
+            //         isDisabledFinalExam = 1 //gets disabled when points entered for first exam
+            //         console.log(isDisabledFinalExam)
+            //         $("#interest").css("background-color", "lightgray")
+            //
+            //
+            //     }
+            //
+            //     if ($(" #interest1").val() === "") {
+            //         $("#interest").attr('enabled', 'enabled');
+            //         isDisabledFinalExam = 0 //undo disable when first exam is empty
+            //         console.log(isDisabledFinalExam)
+            //         $("#interest ").css("background-color", "white")
+            //
+            //
+            //     }
+            //
+            // });
+
+
 
 
         })
@@ -145,7 +340,6 @@
         }
 
 
-
         @media only screen and (max-width: 480px) {
             .input-group-text {
                 width: 100%;
@@ -164,8 +358,8 @@
                 height: 75%;
                 text-align: center;
             }
-            #calculateAgain, #printbutton1
-            {
+
+            #calculateAgain, #printbutton1 {
                 height: 13vw;
                 width: 50%;
                 text-align: center;
@@ -207,6 +401,11 @@
             .btn-outline-secondary {
                 height: 6vw;
                 width: 20vw;
+
+            }
+
+            .input-group-text.C {
+                width: 30vw;
             }
 
 
@@ -228,6 +427,11 @@
             .btn-outline-secondary {
                 height: 4vw;
                 width: 10vw;
+
+            }
+
+            .input-group-text.C {
+                width: 18vw;
             }
 
             .input-group-text, .form-control {
@@ -313,30 +517,88 @@
             </div>
         </div>
     </div>
-    <div class="row ">
+    <hr style="width: 35vw; margin: auto">
+    <div class="row " id="yearMonthInputs">
         <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-            <p class="display-6 custom">Insert number of installments by months <i><u>or</u></i> by years</p>
+            <p class="display-6 custom">Insert total number of installments by months <i><u>or</u></i> by years</p>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
             <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years">
             <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months">
 
         </div>
+        <br>
+
     </div>
-    <div class="row  ">
-        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-            <p class="display-6 custom">Interest percentage</p>
+    <br>
+    <hr>
+    <br>
+    <div class="form-check form-switch " style="margin: auto">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault"><span
+                id="switchCheck"> Varible interes percentage</span></label>
+    </div>
+    <div id="fixedInteres">
+
+        <div class="row text-center">
+            <div class="col-">
+                <div class="display-6">Fixed Interes Percentage</div>
+            </div>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
-            <div class="input-group mb-3 text-end">
-                <input type="text" class="form-control" id="interest" aria-label="Amount (to the nearest dollar)"
-                       placeholder="%"
-                       max="10">
-                <span class="input-group-text euro" style="background-color: lightgray">%</span>
-                <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+        <div class="row  ">
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Interest percentage</p>
+            </div>
+
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                <div class="input-group mb-3 text-end">
+                    <input type="text" class="form-control" id="interest" aria-label="Amount (to the nearest dollar)"
+                           placeholder="%"
+                           max="10">
+                    <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                    <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                </div>
             </div>
         </div>
     </div>
+
+
+    <div id="customKamata">
+        <br>
+        <div class="row text-center ">
+            <div class="col-">
+                <div class="display-6">Custom Interes Percentage</div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                <p class="display-6 custom">Insert total number of installments by months <i><u>or</u></i> by years</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years1">
+                <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months1">
+            </div>
+            <br>
+        </div>
+
+        <div class="row  ">
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Interest percentage</p>
+            </div>
+
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                <div class="input-group mb-3 text-end">
+                    <input type="text" class="form-control" id="interest1" aria-label="Amount (to the nearest dollar)"
+                           placeholder="%"
+                           max="10">
+                    <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                    <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr style="width: 35vw; margin: auto">
 
 
     <div class="row text-center">
