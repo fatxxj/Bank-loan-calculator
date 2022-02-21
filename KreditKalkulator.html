@@ -107,110 +107,101 @@
 
 
             $("#calculate").click(function () {
-                    $("#addAnother").hide()
+                $("#addAnother").hide()
                 $("#calculate").hide()
-$("#removableHR").hide()
+                $("#removableHR").hide()
                 variableInteres = $("#flexSwitchCheckDefault").is(':checked');
                 if (variableInteres === true) {
 
 
                     //if he added custom installment field newRow1
-                    if($("#years1").val()==="")
-                        customYear1=0;
+                    if ($("#years1").val() === "")
+                        customYear1 = 0;
                     else
                         customYear1 = parseInt($("#years1").val())
 
-                    if($("#months1").val()==="")
-                        customMonth1=0
+                    if ($("#months1").val() === "")
+                        customMonth1 = 0
                     else
                         customMonth1 = parseInt($("#months1").val());
 
-                    if($("#interest1").val()==="")
-                        customInteres1=0
+                    if ($("#interest1").val() === "")
+                        customInteres1 = 0
                     else
                         customInteres1 = parseFloat($("#interest1").val()) / 100
 
 
                     //if he added custom installment field newRow2
-                    if($("#years2").val()==="")
-                        customYear2=0;
+                    if ($("#years2").val() === "")
+                        customYear2 = 0;
                     else
                         customYear2 = parseInt($("#years2").val())
 
-                    if($("#months2").val()==="")
-                        customMonth2=0
+                    if ($("#months2").val() === "")
+                        customMonth2 = 0
                     else
-                        customMonth2=parseInt($("#months2").val())
+                        customMonth2 = parseInt($("#months2").val())
 
-                    if($("#interest2").val()==="")
-                        customInteres2=0
+                    if ($("#interest2").val() === "")
+                        customInteres2 = 0
                     else
-                        customInteres2=parseFloat($("#interest2").val())/100
+                        customInteres2 = parseFloat($("#interest2").val()) / 100
 
 
                     //if he added custom installment field newRow3
-                    if($("#years3").val()==="")
-                        customYear3=0;
+                    if ($("#years3").val() === "")
+                        customYear3 = 0;
                     else
                         customYear3 = parseInt($("#years3").val())
-                    if($("#months3").val()==="")
-                        customMonth3=0
+                    if ($("#months3").val() === "")
+                        customMonth3 = 0
                     else
-                        customMonth3=parseInt($("#months3").val())
-                    if($("#interest3").val()==="")
-                        customInteres3=0
+                        customMonth3 = parseInt($("#months3").val())
+                    if ($("#interest3").val() === "")
+                        customInteres3 = 0
                     else
-                        customInteres3=parseFloat($("#interest3").val())/100
+                        customInteres3 = parseFloat($("#interest3").val()) / 100
 
 
                     //if he added custom installment field newRow4
-                    if($("#years4").val()==="")
-                        customYear4=0;
+                    if ($("#years4").val() === "")
+                        customYear4 = 0;
                     else
                         customYear4 = parseInt($("#years4").val())
 
-                    if($("#months4").val()==="")
-                        customMonth4=0
+                    if ($("#months4").val() === "")
+                        customMonth4 = 0
                     else
-                        customMonth4=parseInt($("#months4").val())
+                        customMonth4 = parseInt($("#months4").val())
 
-                    if($("#interest4").val()==="")
-                        customInteres4=0
+                    if ($("#interest4").val() === "")
+                        customInteres4 = 0
                     else
-                        customInteres4=parseFloat($("#interest4").val())/100
+                        customInteres4 = parseFloat($("#interest4").val()) / 100
 
 
                     //if he added custom installment field newRow5
 
-                    if($("#years5").val()==="")
-                        customYear5=0;
+                    if ($("#years5").val() === "")
+                        customYear5 = 0;
                     else
                         customYear5 = parseInt($("#years5").val())
 
-                    if($("#months5").val()==="")
-                        customMonth5=0
+                    if ($("#months5").val() === "")
+                        customMonth5 = 0
                     else
-                        customMonth5=parseInt($("#months5").val())
+                        customMonth5 = parseInt($("#months5").val())
 
-                    if($("#interest5").val()==="")
-                        customInteres5=0
+                    if ($("#interest5").val() === "")
+                        customInteres5 = 0
                     else
-                        customInteres5=parseFloat($("#interest5").val())/100
+                        customInteres5 = parseFloat($("#interest5").val()) / 100
 
 
-
-
-                } else { //fixed interes
-                    // do 'false' stuff, like disabling a 'Continue' button
-                    //console.log("fixedInteres")
-                    //console.log("fixedInteres")
+                } else {
 
 
                 }
-
-
-
-
 
 
                 variableInteres = $("#flexSwitchCheckDefault").is(':checked');
@@ -245,9 +236,7 @@ $("#removableHR").hide()
 
                 }
 
-                console.log(flag)
-                console.log(flag)
-                console.log(flag)
+
 
 
                 if (flag == 3) {
@@ -278,7 +267,7 @@ $("#removableHR").hide()
                 interest = parseInt($("#interest").val()) / 100
                 monthlyWithInterest = parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest
                 yearAndMonth = 0;
-                totalRata = 0;
+                totalAmountRata = 0;
 
 
                 //if both month and year are inputed
@@ -286,7 +275,7 @@ $("#removableHR").hide()
                     yearToMonth = parseInt($("#years").val()) * 12
                     month = parseInt($("#months").val())
                     yearAndMonth = yearToMonth + month
-                    totalRata = monthlyWithInterest / yearAndMonth
+                    totalAmountRata = monthlyWithInterest / yearAndMonth
                     ///////
 
                     logic1 = 1;
@@ -300,47 +289,54 @@ $("#removableHR").hide()
                 //if year is inputed and month is empty or 0
                 else if ($("#years").val() != "" && $("#months").val() == "" || parseInt($("#months").val()) == 0) {
                     yearAndMonth = (parseInt($("#years").val()) * 12);
-                    totalRata = monthlyWithInterest / (parseInt($("#years").val()) * 12);
+                    totalAmountRata = monthlyWithInterest / (parseInt($("#years").val()) * 12);
                 }
 
                 //if month is inputed and year is empty or 0
 
                 else if ($("#months").val() != "" && $("#years").val() == "" || parseInt($("#years").val()) == 0) {
-                    totalRata = monthlyWithInterest / parseInt($("#months").val())
+                    totalAmountRata = monthlyWithInterest / parseInt($("#months").val())
                     yearAndMonth = parseInt($("#months").val())
                 }
 
+                totalLoan=parseInt($("#totalLoan").val());
+                if (variableInteres === false) {
 
-                // input = $(" <input type='text' readonly min='0'  class='input-group-text C'  >")
-                // input.val(yearAndMonth)
-                // input.appendTo("#customKamata")
+                    returnAmountWithInteres= parseInt(totalLoan) + parseInt(totalLoan) * interest
+                    
+                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres.toFixed(2) + " Euro")
 
-                console.log(yearAndMonth)
+                    $("#monthlyReturnAmt").val(totalAmountRata.toFixed(2) + " Euro")
 
-            if(variableInteres===false)
-            {
-                withInterest = $("#TotalreturnAmtWithInterest").val((parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest).toFixed(2) + " Euro")
+                    $("#totalInteres").val((returnAmountWithInteres - parseInt(totalLoan)).toFixed(2) + " Euro")
 
-                $("#returnAmt").val(totalRata.toFixed(2) + " Euro")
+                }
+                if (variableInteres === true) {
 
-                $("#totalInteres").val((parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) + " Euro")
+                    interesFromAllCustom = customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5
+                    monthsFromAllCustom = ((customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12) + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5
+                    monthlyInteres = parseFloat(interesFromAllCustom) / monthsFromAllCustom; // kamata e pjestume per mujet
 
-            }
-            if(variableInteres===true)
-            {
+                    totalInteres = 0;
+                    pagesaPerRat = totalLoan / monthsFromAllCustom
 
-                interesFromAllCustom = customInteres1+customInteres2+customInteres3+customInteres4+customInteres5
-                //yearsFromAllCustom = customYear1+customYear2+customYear3+customYear4+customYear5;
-                monthsFromAllCustom = ((customYear1+customYear2+customYear3+customYear4+customYear5)*12)+customMonth1+customMonth2+customMonth3+customMonth4+customMonth5
+                    for (i = 0; i < monthsFromAllCustom; i++) {
+                        totalInteres += (pagesaPerRat * parseFloat(interesFromAllCustom))
+                        interesFromAllCustom -= monthlyInteres;
+                    }
 
-                console.log(monthsFromAllCustom)
-                $("#totalInteres").val($("#totalLoan").val()* parseFloat(interesFromAllCustom).toFixed(2)+" Euro");
-                withCustomInterestReturn = $("#totalLoan").val() * interesFromAllCustom
-                $("#TotalreturnAmtWithInterest").val(parseInt($("#totalLoan").val()) + parseFloat(withCustomInterestReturn)+" Euro")
-                TotalreturnAmtWithInterest=parseInt($("#totalLoan").val()) + parseFloat(withCustomInterestReturn)
-                console.log(TotalreturnAmtWithInterest)
-                $("#returnAmt").val((TotalreturnAmtWithInterest/monthsFromAllCustom).toFixed(2)+" Euro")
-            }
+
+                    $("#totalInteres").val(totalInteres.toFixed(2)) + " Euro";
+                    withCustomInterestReturn = $("#totalLoan").val() * interesFromAllCustom
+                    $("#TotalreturnAmtWithInterest").val((parseInt($("#totalLoan").val()) + totalInteres).toFixed(2) + " Euro")
+
+//                    TotalreturnAmtWithInterest = parseInt($("#totalLoan").val()) + parseFloat(withCustomInterestReturn)
+                    TotalreturnAmtWithInterest = parseInt((parseInt($("#totalLoan").val()) + totalInteres).toFixed(2)+" Euro")
+
+                    $("#monthlyReturnAmt").val((TotalreturnAmtWithInterest / monthsFromAllCustom).toFixed(2) + " Euro")
+
+
+                }
 
                 $("#calculateAgain").click(function () {
                     location.reload()
@@ -353,8 +349,6 @@ $("#removableHR").hide()
                     window.open("KreditKalkulatorAL.html", "_self")
                 }
             })
-
-
 
 
         })
@@ -444,7 +438,7 @@ $("#removableHR").hide()
         }
 
         @media only screen and (max-width: 599px) {
-            input, #TotalreturnAmtWithInterest, #returnAmt {
+            input, #TotalreturnAmtWithInterest, monthlyReturnAmt {
                 width: 100%;
             }
 
@@ -578,7 +572,7 @@ $("#removableHR").hide()
             </div>
         </div>
     </div>
-    <hr style="width: 35vw; margin: auto" >
+    <hr style="width: 35vw; margin: auto">
     <div class="form-check form-switch " style="margin: auto">
         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
         <label class="form-check-label" for="flexSwitchCheckDefault"><span
@@ -646,7 +640,7 @@ $("#removableHR").hide()
 
         <div class="row  ">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Interest percentage</p>
+                <p class="display-6 custom">Interest percentage for the upper period</p>
             </div>
 
             <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -678,7 +672,7 @@ $("#removableHR").hide()
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage</p>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -715,7 +709,7 @@ $("#removableHR").hide()
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage</p>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -752,7 +746,7 @@ $("#removableHR").hide()
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage</p>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -789,7 +783,7 @@ $("#removableHR").hide()
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage</p>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -811,7 +805,7 @@ $("#removableHR").hide()
             <br>
 
         </div>
-<br><br>
+        <br><br>
         <div class="row d-flex justify-content-center">
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-8 d-flex  justify-content-center"><br>
@@ -865,7 +859,7 @@ $("#removableHR").hide()
                 <p class="display-6 custom">Monthly installment amount</p>
             </div>
             <div class="col-sm-5 col-md-5 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
-                <input readonly class="input-group-text" type="text" placeholder="" id="returnAmt">
+                <input readonly class="input-group-text" type="text" placeholder="" id="monthlyReturnAmt">
             </div>
         </div>
         <br><br>
