@@ -334,7 +334,7 @@
 
                     var principal = parseFloat(amount);
                     var calculatedInterest = parseFloat(interest)  / 12;
-                    var calculatedPayments = parseFloat(years) * 12;
+                    var calculatedPayments = (parseFloat(years) * 12)+customMonth1+customMonth2+customMonth3+customMonth4+customMonth5;
 
 
                     //Calculating the monthly payment
@@ -349,18 +349,10 @@
                     const totalPayment = (monthly * calculatedPayments).toFixed(2);
                     //==================================================
 
-                    for (i = 1; i <= monthsFromAllCustom; i++) {
-                        totalInteres = totalInteres + (pagesaPerRatPaKamat * interesFromAllCustom);
-                        interesFromAllCustom = interesFromAllCustom - monthlyInteres;
-                        console.log(totalInteres)
-                    }
-                    //console.log(totalInteres)
+
 
                     $("#totalInteres").val(totalInterest + " Euro");
                     $("#TotalreturnAmtWithInterest").val((totalPayment) + " Euro")
-
-                    TotalreturnAmtWithInterest = (parseFloat($("#totalLoan").val()) + totalInteres)
-
                     $("#monthlyReturnAmt").val((monthlyPayment) + " Euro")
 
 
