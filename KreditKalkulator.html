@@ -29,7 +29,7 @@
             $("#flexSwitchCheckDefault").change(function () {
                 variableInteres = $(this).is(':checked');
                 if (variableInteres === true) {
-                    //  console.log("variableInteres")
+
                     $("#customKamata").show()
                     $("#fixedInteres").hide()
 
@@ -37,7 +37,7 @@
                     $("#yearMonthInputs").hide()
                 } else {
                     // do 'false' stuff, like disabling a 'Continue' button
-                    //console.log("fixedInteres")
+
                     $("#fixedInteres").show()
                     $("#customKamata").hide()
                     $("#yearMonthInputs").show()
@@ -50,14 +50,14 @@
             $("#flexSwitchCheckDefault").change(function () {
                 variableInteres = $(this).is(':checked');
                 if (variableInteres === true) {
-                    //console.log("variableInteres")
+
                     $("#customKamata").show()
                     $("#fixedInteres").hide()
                     $("span#switchCheck").text("Fixed interest percentage")
                     $("#yearMonthInputs").hide()
                 } else {
                     // do 'false' stuff, like disabling a 'Continue' button
-                    // console.log("fixedInteres")
+
                     $("#fixedInteres").show()
                     $("#yearMonthInputs").show()
                     $("span#switchCheck").text("Variable interest percentage")
@@ -74,7 +74,7 @@
 
                 i++;
 
-                //console.log(i)
+
                 if (i === 5) {
                     $("#addAnother").attr('disabled', 'disabled')
                 }
@@ -82,25 +82,25 @@
 
 
             $("#removeField2").click(function () {
-                // console.log(i)
+
                 $("#newRow2").remove()
 
             })
 
             $("#removeField3").click(function () {
-                // console.log(i)
+
                 $("#newRow3").remove()
 
             })
 
             $("#removeField4").click(function () {
-                // console.log(i)
+
                 $("#newRow4").remove()
 
             })
 
             $("#removeField5").click(function () {
-                // console.log(i)
+
                 $("#newRow5").remove()
 
             })
@@ -111,100 +111,9 @@
                 $("#calculate").hide()
                 $("#removableHR").hide()
                 variableInteres = $("#flexSwitchCheckDefault").is(':checked');
-                if (variableInteres === true) {
 
 
-                    //if he added custom installment field newRow1
-                    if ($("#years1").val() === "")
-                        customYear1 = 0;
-                    else
-                        customYear1 = parseInt($("#years1").val())
-
-                    if ($("#months1").val() === "")
-                        customMonth1 = 0
-                    else
-                        customMonth1 = parseInt($("#months1").val());
-
-                    if ($("#interest1").val() === "")
-                        customInteres1 = 0
-                    else
-                        customInteres1 = parseFloat($("#interest1").val()) / 100
-
-
-                    //if he added custom installment field newRow2
-                    if ($("#years2").val() === "")
-                        customYear2 = 0;
-                    else
-                        customYear2 = parseInt($("#years2").val())
-
-                    if ($("#months2").val() === "")
-                        customMonth2 = 0
-                    else
-                        customMonth2 = parseInt($("#months2").val())
-
-                    if ($("#interest2").val() === "")
-                        customInteres2 = 0
-                    else
-                        customInteres2 = parseFloat($("#interest2").val()) / 100
-
-
-                    //if he added custom installment field newRow3
-                    if ($("#years3").val() === "")
-                        customYear3 = 0;
-                    else
-                        customYear3 = parseInt($("#years3").val())
-                    if ($("#months3").val() === "")
-                        customMonth3 = 0
-                    else
-                        customMonth3 = parseInt($("#months3").val())
-                    if ($("#interest3").val() === "")
-                        customInteres3 = 0
-                    else
-                        customInteres3 = parseFloat($("#interest3").val()) / 100
-
-
-                    //if he added custom installment field newRow4
-                    if ($("#years4").val() === "")
-                        customYear4 = 0;
-                    else
-                        customYear4 = parseInt($("#years4").val())
-
-                    if ($("#months4").val() === "")
-                        customMonth4 = 0
-                    else
-                        customMonth4 = parseInt($("#months4").val())
-
-                    if ($("#interest4").val() === "")
-                        customInteres4 = 0
-                    else
-                        customInteres4 = parseFloat($("#interest4").val()) / 100
-
-
-                    //if he added custom installment field newRow5
-
-                    if ($("#years5").val() === "")
-                        customYear5 = 0;
-                    else
-                        customYear5 = parseInt($("#years5").val())
-
-                    if ($("#months5").val() === "")
-                        customMonth5 = 0
-                    else
-                        customMonth5 = parseInt($("#months5").val())
-
-                    if ($("#interest5").val() === "")
-                        customInteres5 = 0
-                    else
-                        customInteres5 = parseFloat($("#interest5").val()) / 100
-
-
-                } else {
-
-
-                }
-
-
-                variableInteres = $("#flexSwitchCheckDefault").is(':checked');
+                // variableInteres = $("#flexSwitchCheckDefault").is(':checked');
                 if (variableInteres === false) {
                     if ($("#interest").val() === "")
                         alert("Interest is required")
@@ -219,7 +128,8 @@
                     } else
                         flag++;
 
-                } else {
+                } else  // variable interest is true
+                {
                     if ($("#totalLoan").val() === "") {
                         alert("Loan amount is required")
 
@@ -237,9 +147,7 @@
                 }
 
 
-
-
-                if (flag == 3) {
+                if (flag == 3) { // nese i kemi permbush kriteret per required fields
                     //$("#result").show()
                     $("#hrID").show()
                     $(this).css({
@@ -256,7 +164,7 @@
                     });
 
 
-                } else {
+                } else { // nese si kemi permbush kriterert per required fields i bejm restart inputsat
                     $("#totalLoan").val("")
                     $(".totalInstallments").val("")
                     $("#interest").val("")
@@ -264,18 +172,18 @@
                 }
 
 
-                interest = parseInt($("#interest").val()) / 100
-                monthlyWithInterest = parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest
+                interest = parseFloat($("#interest").val()) / 100 // kamata
+                totalLoanWithInterest = parseFloat($("#totalLoan").val()) + (parseFloat($("#totalLoan").val()) * interest) // krediti plus me kalkulimin e kamates
                 yearAndMonth = 0;
-                totalAmountRata = 0;
+                totalAmountRata = 0; // vlera e rates
 
 
                 //if both month and year are inputed
-                if ($("#months").val() != "" && $("#years").val() != "" && parseInt($("#months").val()) !== 0 && parseInt($("#years").val()) !== 0) {
-                    yearToMonth = parseInt($("#years").val()) * 12
-                    month = parseInt($("#months").val())
-                    yearAndMonth = yearToMonth + month
-                    totalAmountRata = monthlyWithInterest / yearAndMonth
+                if ($("#months").val() != "" && $("#years").val() != "" && parseFloat($("#months").val()) !== 0 && parseFloat($("#years").val()) !== 0) {
+                    yearToMonth = parseFloat($("#years").val()) * 12 // konvertimi nga vjet ne muaj
+                    month = parseFloat($("#months").val())
+                    yearAndMonth = yearToMonth + month // mbledhja e vjetve dhe muajve te konvertuara ne muaj
+                    totalAmountRata = totalLoanWithInterest / yearAndMonth // vlera e rates esht totali me interes pjestim per numrin se sa muaj kemi
                     ///////
 
                     logic1 = 1;
@@ -287,53 +195,165 @@
 
 
                 //if year is inputed and month is empty or 0
-                else if ($("#years").val() != "" && $("#months").val() == "" || parseInt($("#months").val()) == 0) {
-                    yearAndMonth = (parseInt($("#years").val()) * 12);
-                    totalAmountRata = monthlyWithInterest / (parseInt($("#years").val()) * 12);
+                else if ($("#years").val() != "" && $("#months").val() == "" || parseFloat($("#months").val()) == 0) {
+                    yearAndMonth = (parseFloat($("#years").val()) * 12);
+                    totalAmountRata = totalLoanWithInterest / (parseFloat($("#years").val()) * 12);
                 }
 
                 //if month is inputed and year is empty or 0
 
-                else if ($("#months").val() != "" && $("#years").val() == "" || parseInt($("#years").val()) == 0) {
-                    totalAmountRata = monthlyWithInterest / parseInt($("#months").val())
-                    yearAndMonth = parseInt($("#months").val())
+                else if ($("#months").val() != "" && $("#years").val() == "" || parseFloat($("#years").val()) == 0) {
+                    totalAmountRata = totalLoanWithInterest / parseFloat($("#months").val())
+                    yearAndMonth = parseFloat($("#months").val())
                 }
 
-                totalLoan=parseInt($("#totalLoan").val());
+                totalLoan = parseFloat($("#totalLoan").val());
                 if (variableInteres === false) {
 
-                    returnAmountWithInteres= parseInt(totalLoan) + parseInt(totalLoan) * interest
-                    
-                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres.toFixed(2) + " Euro")
+                    returnAmountWithInteres = parseFloat(totalLoan) + (parseFloat(totalLoan) * interest)
 
-                    $("#monthlyReturnAmt").val(totalAmountRata.toFixed(2) + " Euro")
+                    $("#totalInteres").val((returnAmountWithInteres - parseFloat(totalLoan)) + " Euro") // input fieldi i par te rezulatit i fixed percentage
 
-                    $("#totalInteres").val((returnAmountWithInteres - parseInt(totalLoan)).toFixed(2) + " Euro")
+                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres + " Euro") // input fieldi i dyt te return amount with fixed
+
+                    $("#monthlyReturnAmt").val(totalAmountRata + " Euro") // input fieldi i tret te return amount with fixed
+
 
                 }
+
+
                 if (variableInteres === true) {
+                    //if he added custom installment field newRow1
+                    if ($("#years1").val() === "")
+                        customYear1 = 0;
+                    else
+                        customYear1 = parseFloat($("#years1").val())
 
-                    interesFromAllCustom = customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5
-                    monthsFromAllCustom = ((customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12) + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5
-                    monthlyInteres = parseFloat(interesFromAllCustom) / monthsFromAllCustom; // kamata e pjestume per mujet
+                    if ($("#months1").val() === "")
+                        customMonth1 = 0
+                    else
+                        customMonth1 = parseFloat($("#months1").val());
 
-                    totalInteres = 0;
-                    pagesaPerRat = totalLoan / monthsFromAllCustom
-
-                    for (i = 0; i < monthsFromAllCustom; i++) {
-                        totalInteres += (pagesaPerRat * parseFloat(interesFromAllCustom))
-                        interesFromAllCustom -= monthlyInteres;
-                    }
+                    if ($("#interest1").val() === "")
+                        customInteres1 = 0
+                    else
+                        customInteres1 = parseFloat($("#interest1").val()) / 100
 
 
-                    $("#totalInteres").val(totalInteres.toFixed(2)) + " Euro";
-                    withCustomInterestReturn = $("#totalLoan").val() * interesFromAllCustom
-                    $("#TotalreturnAmtWithInterest").val((parseInt($("#totalLoan").val()) + totalInteres).toFixed(2) + " Euro")
+                    //if he added custom installment field newRow2
+                    if ($("#years2").val() === "")
+                        customYear2 = 0;
+                    else
+                        customYear2 = parseFloat($("#years2").val())
 
-//                    TotalreturnAmtWithInterest = parseInt($("#totalLoan").val()) + parseFloat(withCustomInterestReturn)
-                    TotalreturnAmtWithInterest = parseInt((parseInt($("#totalLoan").val()) + totalInteres).toFixed(2)+" Euro")
+                    if ($("#months2").val() === "")
+                        customMonth2 = 0
+                    else
+                        customMonth2 = parseFloat($("#months2").val())
 
-                    $("#monthlyReturnAmt").val((TotalreturnAmtWithInterest / monthsFromAllCustom).toFixed(2) + " Euro")
+                    if ($("#interest2").val() === "")
+                        customInteres2 = 0
+                    else
+                        customInteres2 = parseFloat($("#interest2").val()) / 100
+
+
+                    //if he added custom installment field newRow3
+                    if ($("#years3").val() === "")
+                        customYear3 = 0;
+                    else
+                        customYear3 = parseFloat($("#years3").val())
+                    if ($("#months3").val() === "")
+                        customMonth3 = 0
+                    else
+                        customMonth3 = parseFloat($("#months3").val())
+                    if ($("#interest3").val() === "")
+                        customInteres3 = 0
+                    else
+                        customInteres3 = parseFloat($("#interest3").val()) / 100
+
+
+                    //if he added custom installment field newRow4
+                    if ($("#years4").val() === "")
+                        customYear4 = 0;
+                    else
+                        customYear4 = parseFloat($("#years4").val())
+
+                    if ($("#months4").val() === "")
+                        customMonth4 = 0
+                    else
+                        customMonth4 = parseFloat($("#months4").val())
+
+                    if ($("#interest4").val() === "")
+                        customInteres4 = 0
+                    else
+                        customInteres4 = parseFloat($("#interest4").val()) / 100
+
+
+                    //if he added custom installment field newRow5
+
+                    if ($("#years5").val() === "")
+                        customYear5 = 0;
+                    else
+                        customYear5 = parseFloat($("#years5").val())
+
+                    if ($("#months5").val() === "")
+                        customMonth5 = 0
+                    else
+                        customMonth5 = parseFloat($("#months5").val())
+
+                    if ($("#interest5").val() === "")
+                        customInteres5 = 0
+                    else
+                        customInteres5 = parseFloat($("#interest5").val()) / 100
+
+
+                }
+                // else {
+                //
+                //
+                // }
+
+
+                if (variableInteres === true) {  // nese e ka klilku butonin per variable interes i ndrojm formulat per variable interes
+
+                    //interesFromAllCustom = (customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5); // kamata e krejt fieldsave e mbledhet e pjestume me 100
+                  //  yearConvertedToMonthsOnCustomFields = (customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12 // konvertohen vjetet ne muj
+                   // monthsFromAllCustom = yearConvertedToMonthsOnCustomFields + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5 // mblidhen mujet plus konvertimi i vjetve ne muj
+
+                   // monthlyInteres = (parseFloat(interesFromAllCustom) / monthsFromAllCustom); // kamata e pjestume per mujet
+
+                 //   totalInteres = 0;
+                   // pagesaPerRatPaKamat = ($("#totalLoan").val() / monthsFromAllCustom)
+
+                    // ========================================================================
+
+                    var amount = $("#totalLoan").val();
+                    var interest = interesFromAllCustom
+                    var years = customYear1 + customYear2 + customYear3 + customYear4 + customYear5
+
+
+                    var principal = parseFloat(amount);
+                    var calculatedInterest = parseFloat(interest)  / 12;
+                    var calculatedPayments = (parseFloat(years) * 12)+customMonth1+customMonth2+customMonth3+customMonth4+customMonth5;
+
+
+                    //Calculating the monthly payment
+                    var x = Math.pow(1 + calculatedInterest, calculatedPayments);
+                    var monthly = (principal * x * calculatedInterest) / (x - 1);
+                    var monthlyPayment = monthly.toFixed(2);
+
+                        //calculating the total interest
+                    const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
+
+                    //calculating the total payment
+                    const totalPayment = (monthly * calculatedPayments).toFixed(2);
+                    //==================================================
+
+
+
+                    $("#totalInteres").val(totalInterest + " Euro");
+                    $("#TotalreturnAmtWithInterest").val((totalPayment) + " Euro")
+                    $("#monthlyReturnAmt").val((monthlyPayment) + " Euro")
 
 
                 }
