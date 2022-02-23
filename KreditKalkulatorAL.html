@@ -17,35 +17,139 @@
 
 
         $(document).ready(function () {
-
-            var flag = 0;
-            $("#result").hide()
             $("#hrID").hide()
 
+            var flag = 0;
+            $("#newRow2").hide()
+            $("#newRow3").hide()
+            $("#newRow4").hide()
+            $("#newRow5").hide()
+            $("#result").hide()
 
+            $("#flexSwitchCheckDefault").change(function () {
+                variableInteres = $(this).is(':checked');
+                if (variableInteres === true) {
+
+                    $("#customKamata").show()
+                    $("#fixedInteres").hide()
+
+                    $("span#switchCheck").text("Fixed interest percentage")
+                    $("#yearMonthInputs").hide()
+                } else {
+                    // do 'false' stuff, like disabling a 'Continue' button
+
+                    $("#fixedInteres").show()
+                    $("#customKamata").hide()
+                    $("#yearMonthInputs").show()
+                    $("span#switchCheck").text("Variable interest percentage")
+
+                }
+            })
+
+            $("#customKamata").hide()
+            $("#flexSwitchCheckDefault").change(function () {
+                variableInteres = $(this).is(':checked');
+                if (variableInteres === true) {
+
+                    $("#customKamata").show()
+                    $("#fixedInteres").hide()
+                    $("span#switchCheck").text("Fixed interest percentage")
+                    $("#yearMonthInputs").hide()
+                } else {
+                    // do 'false' stuff, like disabling a 'Continue' button
+
+                    $("#fixedInteres").show()
+                    $("#yearMonthInputs").show()
+                    $("span#switchCheck").text("Variable interest percentage")
+                }
+            })
+
+
+            //calculations for both scenarios
+            var i = 2;
+
+
+            $("#addAnother").click(function () {
+                $("#newRow" + i).show();
+
+                i++;
+
+
+                if (i === 5) {
+                    $("#addAnother").attr('disabled', 'disabled')
+                }
+            })
+
+
+            $("#removeField2").click(function () {
+
+                $("#newRow2").remove()
+
+            })
+
+            $("#removeField3").click(function () {
+
+                $("#newRow3").remove()
+
+            })
+
+            $("#removeField4").click(function () {
+
+                $("#newRow4").remove()
+
+            })
+
+            $("#removeField5").click(function () {
+
+                $("#newRow5").remove()
+
+            })
 
 
             $("#calculate").click(function () {
-                if ($("#totalLoan").val() === "") {
-                    alert("Sasia e kredisë është e patjetërsueshme")
-
-                } else
-                    flag++;
-
-                if ($("#months").val() == "" && $("#years").val() === "")
-                    alert("Numri i ratave mujore është i patjetërsueshëm")
-                else flag++;
-
-                if ($("#interest").val() === "")
-                    alert("Vlera e interesit bankar është e patjetërsueshme")
-                else flag++;
+                $("#addAnother").hide()
+                $("#calculate").hide()
+                $("#removableHR").hide()
+                variableInteres = $("#flexSwitchCheckDefault").is(':checked');
 
 
+                // variableInteres = $("#flexSwitchCheckDefault").is(':checked');
+                if (variableInteres === false) {
+                    if ($("#interest").val() === "")
+                        alert("Interest is required")
+                    else flag++;
+
+                    if ($("#months").val() == "" && $("#years").val() === "")
+                        alert(" Number of installments either by month either by year is required")
+                    else flag++;
+                    if ($("#totalLoan").val() === "") {
+                        alert("Loan amount is required")
+
+                    } else
+                        flag++;
+
+                } else  // variable interest is true
+                {
+                    if ($("#totalLoan").val() === "") {
+                        alert("Loan amount is required")
+
+                    } else
+                        flag++;
+
+                    if ($("#interest1").val() === "")
+                        alert("Custom interest amount is required")
+                    else flag++;
+                    if ($("#years1").val() === "" && $("#months1").val() === "")
+                        alert("At least one of the custom fields for year and month is required")
+                    else
+                        flag++;
+
+                }
 
 
-                if (flag == 3) {
+                if (flag == 3) { // nese i kemi permbush kriteret per required fields
                     //$("#result").show()
-                $("#hrID").show()
+                    $("#hrID").show()
                     $(this).css({
                         borderStyle: "inset",
                         cursor: "wait"
@@ -60,55 +164,209 @@
                     });
 
 
-                } else {
+                } else { // nese si kemi permbush kriterert per required fields i bejm restart inputsat
                     $("#totalLoan").val("")
                     $(".totalInstallments").val("")
                     $("#interest").val("")
 
                 }
-                interest = parseInt($("#interest").val()) / 100
-                monthlyWithInterest = parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest
 
-                totalRata = 0;
+
+                interest = parseFloat($("#interest").val()) / 100 // kamata
+                totalLoanWithInterest = parseFloat($("#totalLoan").val()) + (parseFloat($("#totalLoan").val()) * interest) // krediti plus me kalkulimin e kamates
+                yearAndMonth = 0;
+                totalAmountRata = 0; // vlera e rates
+
 
                 //if both month and year are inputed
-                if ($("#months").val() != "" && $("#years").val() != "" && parseInt($("#months").val()) !== 0 && parseInt($("#years").val()) !== 0) {
-                    yearToMonth = parseInt($("#years").val()) * 12
-                    month = parseInt($("#months").val())
-                    yearAndMonth = yearToMonth + month
+                if ($("#months").val() != "" && $("#years").val() != "" && parseFloat($("#months").val()) !== 0 && parseFloat($("#years").val()) !== 0) {
+                    yearToMonth = parseFloat($("#years").val()) * 12 // konvertimi nga vjet ne muaj
+                    month = parseFloat($("#months").val())
+                    yearAndMonth = yearToMonth + month // mbledhja e vjetve dhe muajve te konvertuara ne muaj
+                    totalAmountRata = totalLoanWithInterest / yearAndMonth // vlera e rates esht totali me interes pjestim per numrin se sa muaj kemi
+                    ///////
 
-                    totalRata = monthlyWithInterest / yearAndMonth
+                    logic1 = 1;
+
 
                 }
 
 
+
+
                 //if year is inputed and month is empty or 0
-                else if ($("#years").val() != "" && $("#months").val() == "" || parseInt($("#months").val()) == 0) {
-                    totalRata = monthlyWithInterest / (parseInt($("#years").val()) * 12);
+                else if ($("#years").val() != "" && $("#months").val() == "" || parseFloat($("#months").val()) == 0) {
+                    yearAndMonth = (parseFloat($("#years").val()) * 12);
+                    totalAmountRata = totalLoanWithInterest / (parseFloat($("#years").val()) * 12);
                 }
 
                 //if month is inputed and year is empty or 0
 
-                else if ($("#months").val() != "" && $("#years").val() == "" || parseInt($("#years").val()) == 0)
-                    totalRata = monthlyWithInterest / parseInt($("#months").val())
+                else if ($("#months").val() != "" && $("#years").val() == "" || parseFloat($("#years").val()) == 0) {
+                    totalAmountRata = totalLoanWithInterest / parseFloat($("#months").val())
+                    yearAndMonth = parseFloat($("#months").val())
+                }
 
-                withInterest = $("#TotalreturnAmtWithInterest").val((parseInt($("#totalLoan").val()) + parseInt($("#totalLoan").val()) * interest).toFixed(2) + " Euro")
+                totalLoan = parseFloat($("#totalLoan").val());
+                if (variableInteres === false) {
 
-                $("#returnAmt").val(totalRata.toFixed(2) + " Euro")
+                    returnAmountWithInteres = parseFloat(totalLoan) + (parseFloat(totalLoan) * interest)
+
+                    $("#totalInteres").val((returnAmountWithInteres - parseFloat(totalLoan)) + " Euro") // input fieldi i par te rezulatit i fixed percentage
+
+                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres + " Euro") // input fieldi i dyt te return amount with fixed
+
+                    $("#monthlyReturnAmt").val(totalAmountRata + " Euro") // input fieldi i tret te return amount with fixed
+
+
+                }
+
+
+                if (variableInteres === true) {
+                    //if he added custom installment field newRow1
+                    if ($("#years1").val() === "")
+                        customYear1 = 0;
+                    else
+                        customYear1 = parseFloat($("#years1").val())
+
+                    if ($("#months1").val() === "")
+                        customMonth1 = 0
+                    else
+                        customMonth1 = parseFloat($("#months1").val());
+
+                    if ($("#interest1").val() === "")
+                        customInteres1 = 0
+                    else
+                        customInteres1 = parseFloat($("#interest1").val()) / 100
+
+
+                    //if he added custom installment field newRow2
+                    if ($("#years2").val() === "")
+                        customYear2 = 0;
+                    else
+                        customYear2 = parseFloat($("#years2").val())
+
+                    if ($("#months2").val() === "")
+                        customMonth2 = 0
+                    else
+                        customMonth2 = parseFloat($("#months2").val())
+
+                    if ($("#interest2").val() === "")
+                        customInteres2 = 0
+                    else
+                        customInteres2 = parseFloat($("#interest2").val()) / 100
+
+
+                    //if he added custom installment field newRow3
+                    if ($("#years3").val() === "")
+                        customYear3 = 0;
+                    else
+                        customYear3 = parseFloat($("#years3").val())
+                    if ($("#months3").val() === "")
+                        customMonth3 = 0
+                    else
+                        customMonth3 = parseFloat($("#months3").val())
+                    if ($("#interest3").val() === "")
+                        customInteres3 = 0
+                    else
+                        customInteres3 = parseFloat($("#interest3").val()) / 100
+
+
+                    //if he added custom installment field newRow4
+                    if ($("#years4").val() === "")
+                        customYear4 = 0;
+                    else
+                        customYear4 = parseFloat($("#years4").val())
+
+                    if ($("#months4").val() === "")
+                        customMonth4 = 0
+                    else
+                        customMonth4 = parseFloat($("#months4").val())
+
+                    if ($("#interest4").val() === "")
+                        customInteres4 = 0
+                    else
+                        customInteres4 = parseFloat($("#interest4").val()) / 100
+
+
+                    //if he added custom installment field newRow5
+
+                    if ($("#years5").val() === "")
+                        customYear5 = 0;
+                    else
+                        customYear5 = parseFloat($("#years5").val())
+
+                    if ($("#months5").val() === "")
+                        customMonth5 = 0
+                    else
+                        customMonth5 = parseFloat($("#months5").val())
+
+                    if ($("#interest5").val() === "")
+                        customInteres5 = 0
+                    else
+                        customInteres5 = parseFloat($("#interest5").val()) / 100
+
+
+                }
+                // else {
+                //
+                //
+                // }
+
+
+                if (variableInteres === true) {  // nese e ka klilku butonin per variable interes i ndrojm formulat per variable interes
+
+                    //interesFromAllCustom = (customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5); // kamata e krejt fieldsave e mbledhet e pjestume me 100
+                  //  yearConvertedToMonthsOnCustomFields = (customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12 // konvertohen vjetet ne muj
+                   // monthsFromAllCustom = yearConvertedToMonthsOnCustomFields + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5 // mblidhen mujet plus konvertimi i vjetve ne muj
+
+                   // monthlyInteres = (parseFloat(interesFromAllCustom) / monthsFromAllCustom); // kamata e pjestume per mujet
+
+                 //   totalInteres = 0;
+                   // pagesaPerRatPaKamat = ($("#totalLoan").val() / monthsFromAllCustom)
+
+                    // ========================================================================
+
+                    var amount = $("#totalLoan").val();
+                    var interest = interesFromAllCustom
+                    var years = customYear1 + customYear2 + customYear3 + customYear4 + customYear5
+
+
+                    var principal = parseFloat(amount);
+                    var calculatedInterest = parseFloat(interest)  / 12;
+                    var calculatedPayments = (parseFloat(years) * 12)+customMonth1+customMonth2+customMonth3+customMonth4+customMonth5;
+
+
+                    //Calculating the monthly payment
+                    var x = Math.pow(1 + calculatedInterest, calculatedPayments);
+                    var monthly = (principal * x * calculatedInterest) / (x - 1);
+                    var monthlyPayment = monthly.toFixed(2);
+
+                        //calculating the total interest
+                    const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
+
+                    //calculating the total payment
+                    const totalPayment = (monthly * calculatedPayments).toFixed(2);
+                    //==================================================
+
+
+
+                    $("#totalInteres").val(totalInterest + " Euro");
+                    $("#TotalreturnAmtWithInterest").val((totalPayment) + " Euro")
+                    $("#monthlyReturnAmt").val((monthlyPayment) + " Euro")
+
+
+                }
 
                 $("#calculateAgain").click(function () {
                     location.reload()
 
                 })
-                $("#totalInteres").val(( parseInt($("#TotalreturnAmtWithInterest").val()) - parseInt($("#totalLoan").val())).toFixed(2) +" Euro")
-
             })
 
-
-
-            $("#gjuha").change(function (){
-                if($(this).val()==='1'){
-                    window.open("KreditKalkulator.html","_self")
+            $("#gjuha").change(function () {
+                if ($(this).val() === '1') {
+                    window.open("KreditKalkulatorAL.html", "_self")
                 }
             })
 
@@ -132,8 +390,75 @@
 
         }
 
+
+        .input-group-text {
+            background-color: white;
+
+        }
+
+        .input-group-text.C {
+            margin: 5px;
+            margin-right: 0px;
+            display: inline-block;
+        }
+
+
+        @media only screen and (max-width: 480px) {
+            .input-group-text {
+                width: 100%;
+                height: 15vw;
+                font-size: 18.5px;
+                font-style: italic;
+            }
+
+
+            .display-6.custom {
+                text-align: center;
+            }
+
+            .btn-outline-secondary {
+                width: 50%;
+                height: 75%;
+                text-align: center;
+            }
+
+            #calculateAgain, #printbutton1 {
+                height: 13vw;
+                width: 50%;
+                text-align: center;
+                justify-content: center;
+                margin-top: 2.5vw;
+
+            }
+
+            #addAnother {
+                margin-top: 2.5vw;
+                height: 16vw;
+                width: 70vw;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .input-group-text.euro {
+                width: 13vw;
+                height: 15vw;
+                font-size: 18.5px;
+                font-style: italic;
+                justify-content: center;
+            }
+
+            .form-control {
+                width: 80%;
+            }
+
+            .input-group-text.decimal {
+                width: 15vw;
+            }
+
+        }
+
         @media only screen and (max-width: 599px) {
-            input, #TotalreturnAmtWithInterest, #returnAmt {
+            input, #TotalreturnAmtWithInterest, monthlyReturnAmt {
                 width: 100%;
             }
 
@@ -142,6 +467,83 @@
             }
         }
 
+
+        @media only screen and (min-width: 750px) {
+            .btn-outline-secondary {
+                height: 6vw;
+                width: 20vw;
+
+            }
+
+            .input-group-text.C {
+                width: 30vw;
+            }
+
+
+            .display-6.custom {
+                font-size: 22px;
+            }
+
+            /*.d-flex.C.justify-content-end*/
+            /*{*/
+            /*    height: 5vw*/
+            /*    */
+            /*}*/
+            .d-flex.C {
+                height: 5vw;
+            }
+
+            #addAnother {
+                width: 25vw;
+            }
+        }
+
+        @media only screen and (min-width: 1515px) {
+            .btn-outline-secondary {
+                height: 4vw;
+                width: 10vw;
+
+            }
+
+            .input-group-text.C {
+                width: 18vw;
+            }
+
+            .input-group-text, .form-control {
+                height: 3vw;
+            }
+
+            .display-6.custom {
+                font-size: 28px;
+            }
+        }
+
+
+        .form-control, .input-group-text {
+            text-align: center;
+            font-style: italic;
+        }
+
+
+        .form-control:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            border-right-color: lightgray;
+            outline: 0;
+            box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0);
+            text-align: center;
+
+        }
+
+        .input-group-text:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0);
+            text-align: center;
+        }
 
 
     </style>
@@ -157,11 +559,11 @@
     <br>
     <div class="row text-end">
         <div class="col">
-            <label for="gjuha">Ndro gjuhën</label><br>
+            <label for="gjuha">Change Language</label><br>
 
-            <select name="gjuha" id="gjuha"   >
-                <option  value="bosh">Shqip</option>
-                <option id="shqip" value="1">English </option>
+            <select name="gjuha" id="gjuha">
+                <option value="bosh">English</option>
+                <option id="shqip" value="1"> Shqip</option>
             </select>
         </div>
 
@@ -170,90 +572,333 @@
 
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12">
-            <div class="display-6">Kalkulator për kredi bankare</div>
+            <div class="display-6">Bank Loan Calculator</div>
         </div>
     </div>
     <br>
     <div class="row  ">
         <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-            <p class="display-6 custom">Sasia e kredisë</p>
+            <p class="display-6 custom">Insert loan amount</p>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-            <input type="number" min="0" placeholder="Fut vlerën" id="totalLoan">
+        <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+            <div class="input-group mb-3 text-end">
+
+                <input type="number" class="form-control" id="totalLoan" aria-label="Amount (to the nearest dollar)"
+                       placeholder="1000"
+                       max="10">
+                <span class="input-group-text euro" style="background-color: lightgray">	&euro;</span>
+
+                <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+            </div>
         </div>
+    </div>
+    <hr style="width: 35vw; margin: auto">
+    <div class="form-check form-switch " style="margin: auto">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault"><span
+                id="switchCheck"> Varible interes percentage</span></label>
+    </div>
+    <div class="row " id="yearMonthInputs">
+        <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+            <p class="display-6 custom">Insert total number of installments by months <i><u>or</u></i> by years</p>
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+            <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years">
+            <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months">
+
+        </div>
+        <br>
 
     </div>
-    <div class="row justify-content-around">
-        <div class="col-sm-7 col-md-7 col-lg-9 col-12 "><br>
-            <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
+    <br>
+    <hr>
+    <br>
+
+    <div id="fixedInteres">
+
+        <div class="row text-center">
+            <div class="col-">
+                <div class="display-6">Fixed Interes Percentage</div>
+            </div>
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12 "><br>
-            <input type="number" min="0" placeholder="Kohëzgjatja vjetore" class="totalInstallments" id="years">
-            <input type="number" min="0" placeholder="Kohëzgjatja mujore" class=" totalInstallments" id="months">
+        <div class="row  ">
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Interest percentage</p>
+            </div>
+
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                <div class="input-group mb-3 text-end">
+                    <input type="text" class="form-control" id="interest" aria-label="Amount (to the nearest dollar)"
+                           placeholder="%"
+                           max="10">
+                    <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                    <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="customKamata">
+        <br>
+        <div class="row text-center ">
+            <div class="col-">
+                <div class="display-6">Custom Interes Percentage</div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
+                    <i><u>or</u></i> by both</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years1">
+                <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months1">
+            </div>
+            <br>
+        </div>
+
+        <div class="row  ">
+            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Interest percentage for the upper period</p>
+            </div>
+
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                <div class="input-group mb-3 text-end">
+                    <input type="text" class="form-control" id="interest1" aria-label="Amount (to the nearest dollar)"
+                           placeholder="%"
+                           max="10">
+                    <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                    <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div id="newRow2"><br>
+            <hr style="width: 35vw; margin: auto">
+            <div class="row ">
+                <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
+                        <i><u>or</u></i> by both</p>
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years2">
+                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months2">
+                </div>
+                <br>
+            </div>
+
+            <div class="row  ">
+                <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                    <div class="input-group mb-3 text-end">
+                        <input type="text" class="form-control" id="interest2"
+                               aria-label="Amount (to the nearest dollar)"
+                               placeholder="%"
+                               max="10">
+                        <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                        <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-outline-secondary " id="removeField2">Remove custom installment
+                period
+            </button>
+            <br>
+        </div>
+
+        <div id="newRow3"><br>
+            <hr style="width: 35vw; margin: auto">
+            <div class="row ">
+                <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
+                        <i><u>or</u></i> by both</p>
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years3">
+                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months3">
+                </div>
+                <br>
+            </div>
+
+            <div class="row  ">
+                <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                    <div class="input-group mb-3 text-end">
+                        <input type="text" class="form-control" id="interest3"
+                               aria-label="Amount (to the nearest dollar)"
+                               placeholder="%"
+                               max="10">
+                        <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                        <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-outline-secondary " id="removeField3">Remove custom installment
+                period
+            </button>
+            <br>
+        </div>
+
+        <div id="newRow4"><br>
+            <hr style="width: 35vw; margin: auto">
+            <div class="row ">
+                <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
+                        <i><u>or</u></i> by both</p>
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years4">
+                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months4">
+                </div>
+                <br>
+            </div>
+
+            <div class="row  ">
+                <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                    <div class="input-group mb-3 text-end">
+                        <input type="text" class="form-control" id="interest4"
+                               aria-label="Amount (to the nearest dollar)"
+                               placeholder="%"
+                               max="10">
+                        <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                        <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-outline-secondary " id="removeField4">Remove custom installment
+                period
+            </button>
+            <br>
+        </div>
+
+        <div id="newRow5"><br>
+            <hr style="width: 35vw; margin: auto">
+            <div class="row ">
+                <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
+                        <i><u>or</u></i> by both</p>
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years5">
+                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months5">
+                </div>
+                <br>
+            </div>
+
+            <div class="row  ">
+                <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                    <div class="input-group mb-3 text-end">
+                        <input type="text" class="form-control" id="interest5"
+                               aria-label="Amount (to the nearest dollar)"
+                               placeholder="%"
+                               max="10">
+                        <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                        <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <button class="btn btn-outline-secondary " id="removeField5">Remove custom installment
+                period
+            </button>
+            <br>
 
         </div>
-    </div>
-    <div class="row ">
-        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-            <p class="display-6 custom">Sasia e interesit bankar në vlerë perqindjeje</p>
+        <br><br>
+        <div class="row d-flex justify-content-center">
+
+            <div class="col-sm-6 col-md-6 col-lg-6 col-8 d-flex  justify-content-center"><br>
+                <button class="btn btn-outline-secondary " id="addAnother">Add custom installment
+                    period
+                </button>
+                <br><br>
+
+            </div>
+
         </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-            <input type="number" placeholder="%" id="interest" min="0">
-        </div>
+
+
     </div>
+    <br>
+    <hr style="width: 35vw; margin: auto" id="removableHR">
+
+
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12"><br>
-            <button class="btn btn-outline-secondary" id="calculate">Kalkulo</button>
+            <button class="btn btn-outline-secondary" id="calculate">Calculate</button>
         </div>
     </div>
+    <br><br>
 
     <div id="result">
         <hr id="hrID">
         <div class="row text-center">
             <div class="col-">
-                <div class="display-6">Rezultati i kalkulimit</div>
+                <div class="display-6">Calculation result</div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-6 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Interes amount</p>
+            </div>
+            <div class="col-sm-5 col-md-6 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
+                <input readonly class="input-group-text" type="text" placeholder="" id="totalInteres">
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-7 col-md-6 col-lg-9 col-12"><br>
+                <p class="display-6 custom">Total return amount after interest calculation</p>
+            </div>
+            <div class="col-sm-5 col-md-6 col-lg-3 col-12  d-flex C justify-content-end align-items-end  "><br>
+                <input readonly class="input-group-text" type="text" placeholder="" id="TotalreturnAmtWithInterest">
             </div>
         </div>
         <div class="row ">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Sasia totale e interesit bankar</p>
+                <p class="display-6 custom">Monthly installment amount</p>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-                <input type="text" placeholder="" id="totalInteres">
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Sasia totale pas kalkulimit të interesit bankar</p>
-            </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-                <input type="text" placeholder="" id="TotalreturnAmtWithInterest">
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
+                <input readonly class="input-group-text" type="text" placeholder="" id="monthlyReturnAmt">
             </div>
         </div>
-        <div class="row ">
-            <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Sasia e një rate mujore</p>
-            </div>
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12  "><br>
-                <input type="text" placeholder="" id="returnAmt">
-            </div>
-        </div>
+        <br><br>
+        <div class="row d-flex justify-content-center">
 
-        <div class="row">
-
-            <div class="col-sm-7 col-md-7 col-lg-7 col-6"><br>
-                <button class="btn btn-outline-secondary " id="calculateAgain">Kalkulo përsëri
+            <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex justify-content-center"><br>
+                <button class="btn btn-outline-secondary " id="calculateAgain">Calculate again
                 </button>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5 col-6 text-end "><br>
-                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Printo raportin
+            <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex  justify-content-center"><br>
+                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print
+                    report
                 </button>
-<br><br>
+                <br><br>
+
             </div>
 
-
         </div>
-
+        <br><br>
 
     </div>
 
