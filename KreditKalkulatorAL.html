@@ -33,7 +33,7 @@
                     $("#customKamata").show()
                     $("#fixedInteres").hide()
 
-                    $("span#switchCheck").text("Fixed interest percentage")
+                    $("span#switchCheck").text("Kalkulo kredi me interes bankar fiks")
                     $("#yearMonthInputs").hide()
                 } else {
                     // do 'false' stuff, like disabling a 'Continue' button
@@ -41,7 +41,7 @@
                     $("#fixedInteres").show()
                     $("#customKamata").hide()
                     $("#yearMonthInputs").show()
-                    $("span#switchCheck").text("Variable interest percentage")
+                    $("span#switchCheck").text("Kalkulo kredi me interes bankar të personalizuar")
 
                 }
             })
@@ -53,14 +53,14 @@
 
                     $("#customKamata").show()
                     $("#fixedInteres").hide()
-                    $("span#switchCheck").text("Fixed interest percentage")
+                    $("span#switchCheck").text("Kalkulo kredi me interes bankar fiks")
                     $("#yearMonthInputs").hide()
                 } else {
                     // do 'false' stuff, like disabling a 'Continue' button
 
                     $("#fixedInteres").show()
                     $("#yearMonthInputs").show()
-                    $("span#switchCheck").text("Variable interest percentage")
+                    $("span#switchCheck").text("Kalkulo kredi me interes bankar të personalizuar")
                 }
             })
 
@@ -212,11 +212,11 @@
 
                     returnAmountWithInteres = parseFloat(totalLoan) + (parseFloat(totalLoan) * interest)
 
-                    $("#totalInteres").val((returnAmountWithInteres - parseFloat(totalLoan)) + " Euro") // input fieldi i par te rezulatit i fixed percentage
+                    $("#totalInteres").val(returnAmountWithInteres - parseFloat(totalLoan) + " Euro") // input fieldi i par te rezulatit i fixed percentage
 
-                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres + " Euro") // input fieldi i dyt te return amount with fixed
+                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres.toFixed(2) + " Euro") // input fieldi i dyt te return amount with fixed
 
-                    $("#monthlyReturnAmt").val(totalAmountRata + " Euro") // input fieldi i tret te return amount with fixed
+                    $("#monthlyReturnAmt").val(totalAmountRata.toFixed(2) + " Euro") // input fieldi i tret te return amount with fixed
 
 
                 }
@@ -316,14 +316,14 @@
 
                 if (variableInteres === true) {  // nese e ka klilku butonin per variable interes i ndrojm formulat per variable interes
 
-                    //interesFromAllCustom = (customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5); // kamata e krejt fieldsave e mbledhet e pjestume me 100
-                  //  yearConvertedToMonthsOnCustomFields = (customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12 // konvertohen vjetet ne muj
-                   // monthsFromAllCustom = yearConvertedToMonthsOnCustomFields + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5 // mblidhen mujet plus konvertimi i vjetve ne muj
+                    interesFromAllCustom = (customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5); // kamata e krejt fieldsave e mbledhet e pjestume me 100
+                      yearConvertedToMonthsOnCustomFields = (customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12 // konvertohen vjetet ne muj
+                     monthsFromAllCustom = yearConvertedToMonthsOnCustomFields + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5 // mblidhen mujet plus konvertimi i vjetve ne muj
 
-                   // monthlyInteres = (parseFloat(interesFromAllCustom) / monthsFromAllCustom); // kamata e pjestume per mujet
+                     monthlyInteres = (parseFloat(interesFromAllCustom) / monthsFromAllCustom); // kamata e pjestume per mujet
 
-                 //   totalInteres = 0;
-                   // pagesaPerRatPaKamat = ($("#totalLoan").val() / monthsFromAllCustom)
+                       totalInteres = 0;
+                     pagesaPerRatPaKamat = ($("#totalLoan").val() / monthsFromAllCustom)
 
                     // ========================================================================
 
@@ -342,7 +342,7 @@
                     var monthly = (principal * x * calculatedInterest) / (x - 1);
                     var monthlyPayment = monthly.toFixed(2);
 
-                        //calculating the total interest
+                    //calculating the total interest
                     const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
 
                     //calculating the total payment
@@ -366,7 +366,10 @@
 
             $("#gjuha").change(function () {
                 if ($(this).val() === '1') {
-                    window.open("KreditKalkulatorAL.html", "_self")
+                    window.open("KreditKalkulator.html", "_self")
+                }
+                if ($(this).val() === '2') {
+                    window.open("KreditKalkulatorMK.html", "_self")
                 }
             })
 
@@ -559,11 +562,12 @@
     <br>
     <div class="row text-end">
         <div class="col">
-            <label for="gjuha">Change Language</label><br>
+            <label for="gjuha">Ndro gjuhën</label><br>
 
             <select name="gjuha" id="gjuha">
-                <option value="bosh">English</option>
-                <option id="shqip" value="1"> Shqip</option>
+                <option value="bosh">Shqip</option>
+                <option id="shqip" value="1"> English</option>
+                <option id="maqedonisht" value="2"> Македонски</option>
             </select>
         </div>
 
@@ -572,13 +576,13 @@
 
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12">
-            <div class="display-6">Bank Loan Calculator</div>
+            <div class="display-6">Kalkulator për kredi bankare</div>
         </div>
     </div>
     <br>
     <div class="row  ">
         <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-            <p class="display-6 custom">Insert loan amount</p>
+            <p class="display-6 custom">Sasia e kredisë</p>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
             <div class="input-group mb-3 text-end">
@@ -596,15 +600,15 @@
     <div class="form-check form-switch " style="margin: auto">
         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
         <label class="form-check-label" for="flexSwitchCheckDefault"><span
-                id="switchCheck"> Varible interes percentage</span></label>
+                id="switchCheck"> Kalkulo kredi me interes bankar të personalizuar</span></label>
     </div>
     <div class="row " id="yearMonthInputs">
         <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-            <p class="display-6 custom">Insert total number of installments by months <i><u>or</u></i> by years</p>
+            <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
         </div>
         <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-            <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years">
-            <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months">
+            <input type="number" min="0" placeholder="Kohëzgjatja në vite" class="input-group-text C" id="years">
+            <input type="number" min="0" placeholder="Kohëzgjatja në muaj" class="input-group-text C" id="months">
 
         </div>
         <br>
@@ -618,12 +622,12 @@
 
         <div class="row text-center">
             <div class="col-">
-                <div class="display-6">Fixed Interes Percentage</div>
+                <div class="display-6">Kalkulo kredi me interes bankar fiks</div>
             </div>
         </div>
         <div class="row  ">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Interest percentage</p>
+                <p class="display-6 custom">Sasia e interesit bankat në vlerë përqindjeje</p>
             </div>
 
             <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -643,24 +647,23 @@
         <br>
         <div class="row text-center ">
             <div class="col-">
-                <div class="display-6">Custom Interes Percentage</div>
+                <div class="display-6">Kalku kredi me interes bankar të personalizuar</div>
             </div>
         </div>
         <div class="row ">
             <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-                <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
-                    <i><u>or</u></i> by both</p>
+                <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
             </div>
             <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-                <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years1">
-                <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months1">
+                <input type="number" min="0" placeholder="Kohëzgjatja në vite" class="input-group-text C" id="years1">
+                <input type="number" min="0" placeholder="Kohëzgjatja në muaj" class="input-group-text C" id="months1">
             </div>
             <br>
         </div>
 
         <div class="row  ">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Interest percentage for the upper period</p>
+                <p class="display-6 custom">Sasia e interesit bankat në vlerë përqindjeje për periudhën e lartëpërmendur</p>
             </div>
 
             <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -680,19 +683,18 @@
             <hr style="width: 35vw; margin: auto">
             <div class="row ">
                 <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
-                        <i><u>or</u></i> by both</p>
+                    <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore </p>
                 </div>
                 <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years2">
-                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months2">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në vite" class="input-group-text C" id="years2">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në muaj" class="input-group-text C" id="months2">
                 </div>
                 <br>
             </div>
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                    <p class="display-6 custom">Sasia e interesit bankat në vlerë përqindjeje për periudhën e lartëpërmendur</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -707,8 +709,7 @@
                 </div>
             </div>
             <br>
-            <button class="btn btn-outline-secondary " id="removeField2">Remove custom installment
-                period
+            <button class="btn btn-outline-secondary " id="removeField2">Fshij periudhën e shtuar
             </button>
             <br>
         </div>
@@ -717,19 +718,18 @@
             <hr style="width: 35vw; margin: auto">
             <div class="row ">
                 <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
-                        <i><u>or</u></i> by both</p>
+                    <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
                 </div>
                 <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years3">
-                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months3">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në vite" class="input-group-text C" id="years3">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në muaj" class="input-group-text C" id="months3">
                 </div>
                 <br>
             </div>
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                    <p class="display-6 custom">Sasia e interesit bankat në vlerë përqindjeje për periudhën e lartëpërmendur</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -744,8 +744,7 @@
                 </div>
             </div>
             <br>
-            <button class="btn btn-outline-secondary " id="removeField3">Remove custom installment
-                period
+            <button class="btn btn-outline-secondary " id="removeField3">Fshij periudhën e shtuar
             </button>
             <br>
         </div>
@@ -754,19 +753,18 @@
             <hr style="width: 35vw; margin: auto">
             <div class="row ">
                 <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
-                        <i><u>or</u></i> by both</p>
+                    <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
                 </div>
                 <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years4">
-                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months4">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në vite" class="input-group-text C" id="years4">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në muaj" class="input-group-text C" id="months4">
                 </div>
                 <br>
             </div>
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                    <p class="display-6 custom">Sasia e interesit bankat në vlerë përqindjeje për periudhën e lartëpërmendur</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -781,8 +779,7 @@
                 </div>
             </div>
             <br>
-            <button class="btn btn-outline-secondary " id="removeField4">Remove custom installment
-                period
+            <button class="btn btn-outline-secondary " id="removeField4">Fshij periudhën e shtuar
             </button>
             <br>
         </div>
@@ -791,19 +788,18 @@
             <hr style="width: 35vw; margin: auto">
             <div class="row ">
                 <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-                    <p class="display-6 custom">Insert first part of loan by months <i><u>or</u></i> by years
-                        <i><u>or</u></i> by both</p>
+                    <p class="display-6 custom">Fusni numrin e ratave mujore <i><u>ose</u></i> kohëzgjatjen vjetore</p>
                 </div>
                 <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-                    <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years5">
-                    <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months5">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në vite" class="input-group-text C" id="years5">
+                    <input type="number" min="0" placeholder="Kohëzgjatja në muaj" class="input-group-text C" id="months5">
                 </div>
                 <br>
             </div>
 
             <div class="row  ">
                 <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                    <p class="display-6 custom">Interest percentage for the upper period</p>
+                    <p class="display-6 custom">Sasia e interesit bankat në vlerë përqindjeje për periudhën e lartëpërmendur</p>
                 </div>
 
                 <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
@@ -819,8 +815,7 @@
 
             </div>
             <br>
-            <button class="btn btn-outline-secondary " id="removeField5">Remove custom installment
-                period
+            <button class="btn btn-outline-secondary " id="removeField5">Fshij periudhën e shtuar
             </button>
             <br>
 
@@ -829,8 +824,7 @@
         <div class="row d-flex justify-content-center">
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-8 d-flex  justify-content-center"><br>
-                <button class="btn btn-outline-secondary " id="addAnother">Add custom installment
-                    period
+                <button class="btn btn-outline-secondary " id="addAnother">Shto periudhë të personalizuar
                 </button>
                 <br><br>
 
@@ -846,7 +840,7 @@
 
     <div class="row text-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-12"><br>
-            <button class="btn btn-outline-secondary" id="calculate">Calculate</button>
+            <button class="btn btn-outline-secondary" id="calculate">Kalkulo</button>
         </div>
     </div>
     <br><br>
@@ -855,12 +849,12 @@
         <hr id="hrID">
         <div class="row text-center">
             <div class="col-">
-                <div class="display-6">Calculation result</div>
+                <div class="display-6">Rezultati i kalkulimit</div>
             </div>
         </div>
         <div class="row ">
             <div class="col-sm-7 col-md-6 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Interes amount</p>
+                <p class="display-6 custom">Sasia totale e interesit bankar</p>
             </div>
             <div class="col-sm-5 col-md-6 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
                 <input readonly class="input-group-text" type="text" placeholder="" id="totalInteres">
@@ -868,7 +862,7 @@
         </div>
         <div class="row ">
             <div class="col-sm-7 col-md-6 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Total return amount after interest calculation</p>
+                <p class="display-6 custom">Sasia totale e kredisë pas kalkulimit të interesit bankar</p>
             </div>
             <div class="col-sm-5 col-md-6 col-lg-3 col-12  d-flex C justify-content-end align-items-end  "><br>
                 <input readonly class="input-group-text" type="text" placeholder="" id="TotalreturnAmtWithInterest">
@@ -876,7 +870,7 @@
         </div>
         <div class="row ">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Monthly installment amount</p>
+                <p class="display-6 custom">Sasia e një rate mujore</p>
             </div>
             <div class="col-sm-5 col-md-5 col-lg-3 col-12 d-flex C justify-content-end align-items-end "><br>
                 <input readonly class="input-group-text" type="text" placeholder="" id="monthlyReturnAmt">
@@ -886,12 +880,11 @@
         <div class="row d-flex justify-content-center">
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex justify-content-center"><br>
-                <button class="btn btn-outline-secondary " id="calculateAgain">Calculate again
+                <button class="btn btn-outline-secondary " id="calculateAgain">Kalkulo përsëri
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex  justify-content-center"><br>
-                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print
-                    report
+                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Printo raportin e gjeneruar
                 </button>
                 <br><br>
 
