@@ -316,14 +316,14 @@
 
                 if (variableInteres === true) {  // nese e ka klilku butonin per variable interes i ndrojm formulat per variable interes
 
-                    //interesFromAllCustom = (customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5); // kamata e krejt fieldsave e mbledhet e pjestume me 100
-                  //  yearConvertedToMonthsOnCustomFields = (customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12 // konvertohen vjetet ne muj
-                   // monthsFromAllCustom = yearConvertedToMonthsOnCustomFields + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5 // mblidhen mujet plus konvertimi i vjetve ne muj
+                    interesFromAllCustom = (customInteres1 + customInteres2 + customInteres3 + customInteres4 + customInteres5); // kamata e krejt fieldsave e mbledhet e pjestume me 100
+                    yearConvertedToMonthsOnCustomFields = (customYear1 + customYear2 + customYear3 + customYear4 + customYear5) * 12 // konvertohen vjetet ne muj
+                    monthsFromAllCustom = yearConvertedToMonthsOnCustomFields + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5 // mblidhen mujet plus konvertimi i vjetve ne muj
 
-                   // monthlyInteres = (parseFloat(interesFromAllCustom) / monthsFromAllCustom); // kamata e pjestume per mujet
+                    monthlyInteres = (parseFloat(interesFromAllCustom) / monthsFromAllCustom); // kamata e pjestume per mujet
 
-                 //   totalInteres = 0;
-                   // pagesaPerRatPaKamat = ($("#totalLoan").val() / monthsFromAllCustom)
+                    totalInteres = 0;
+                    pagesaPerRatPaKamat = ($("#totalLoan").val() / monthsFromAllCustom)
 
                     // ========================================================================
 
@@ -334,7 +334,7 @@
 
                     var principal = parseFloat(amount);
                     var calculatedInterest = parseFloat(interest)  / 12;
-                    var calculatedPayments = (parseFloat(years) * 12)+customMonth1+customMonth2+customMonth3+customMonth4+customMonth5;
+                    var calculatedPayments = parseFloat(years) * 12;
 
 
                     //Calculating the monthly payment
@@ -349,10 +349,18 @@
                     const totalPayment = (monthly * calculatedPayments).toFixed(2);
                     //==================================================
 
-
+                    for (i = 1; i <= monthsFromAllCustom; i++) {
+                        totalInteres = totalInteres + (pagesaPerRatPaKamat * interesFromAllCustom);
+                        interesFromAllCustom = interesFromAllCustom - monthlyInteres;
+                        console.log(totalInteres)
+                    }
+                    //console.log(totalInteres)
 
                     $("#totalInteres").val(totalInterest + " Euro");
                     $("#TotalreturnAmtWithInterest").val((totalPayment) + " Euro")
+
+                    TotalreturnAmtWithInterest = (parseFloat($("#totalLoan").val()) + totalInteres)
+
                     $("#monthlyReturnAmt").val((monthlyPayment) + " Euro")
 
 
