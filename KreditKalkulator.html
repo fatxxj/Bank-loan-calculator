@@ -83,26 +83,36 @@
 
             $("#removeField2").click(function () {
 
-                $("#newRow2").remove()
+                $("#newRow2").hide()
+                $("#years2").val(0);
+                $("#months2").val(0);
+                $("#interest2").val(0)
 
             })
 
             $("#removeField3").click(function () {
 
-                $("#newRow3").remove()
-
+                $("#newRow3").hide()
+                $("#years3").val(0);
+                $("#months3").val(0);
+                $("#interest3").val(0)
             })
 
             $("#removeField4").click(function () {
 
-                $("#newRow4").remove()
+                $("#newRow4").hide()
+                $("#years4").val(0);
+                $("#months4").val(0);
+                $("#interest4").val(0)
 
             })
 
             $("#removeField5").click(function () {
 
-                $("#newRow5").remove()
-
+                $("#newRow5").hide()
+                $("#years5").val(0);
+                $("#months5").val(0);
+                $("#interest5").val(0)
             })
 
 
@@ -212,13 +222,66 @@
 
                     returnAmountWithInteres = parseFloat(totalLoan) + (parseFloat(totalLoan) * interest)
 
-                    $("#totalInteres").val((returnAmountWithInteres - parseFloat(totalLoan)) + " Euro") // input fieldi i par te rezulatit i fixed percentage
+                    $("#totalInteres").val((returnAmountWithInteres - parseFloat(totalLoan)).toFixed(2) + " Euro") // input fieldi i par te rezulatit i fixed percentage
 
-                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres + " Euro") // input fieldi i dyt te return amount with fixed
+                    $("#TotalreturnAmtWithInterest").val(returnAmountWithInteres.toFixed(2) + " Euro") // input fieldi i dyt te return amount with fixed
 
-                    $("#monthlyReturnAmt").val(totalAmountRata + " Euro") // input fieldi i tret te return amount with fixed
+                    $("#monthlyReturnAmt").val(totalAmountRata.toFixed(2) + " Euro") // input fieldi i tret te return amount with fixed
+
+                    $("#printbutton1").hide();
+
+                    $("#generateTable").click(function () {
 
 
+                        var content = "<table class='table table-striped'>    <thead>\n" +
+                            "    <tr>\n" +
+                            "      <th style='width: 1.2vw;' scope=\"col\">Payment no.</th>\n" +
+
+                            "      <th scope=\"col\">Total payment</th>\n" +
+                            //  "      <th scope=\"col\">Principal</th>\n" +
+                            "      <th scope=\"col\">Interest</th>\n" +
+                            "      <th scope=\"col\">Total interest</th>\n" +
+                            "      <th scope=\"col\">Balance left</th>\n" +
+                            "    </tr>\n" +
+                            "  </thead> "
+
+                        var totalInterestTable = parseFloat("0");
+                        var balanceLeft = returnAmountWithInteres
+                        for (i = 1; i <= yearAndMonth; i++) { //krijojm reshta aq sa kemi muaj
+                            // content += '<tr><td >' + '<b>'+  i+' </b>'+ '</td><td>' + "Month" + i + '</td> <td>' + monthlyPayment +"<i>&euro;</i>"+ '</td> <td>' + "Principal" + i + '</td> <td>' + "Interest" + i + '</td> <td>' + "Total Interest" + i + '</td> <td>' + "Balance" + i + '</td></tr>';
+                            content += "<tr>"
+
+
+                            totalInterestTable += parseFloat((returnAmountWithInteres - parseFloat(totalLoan)) / yearAndMonth)
+                            balanceLeft -= totalAmountRata
+                            parseFloat(totalInterestTable)
+
+                            content += "<td>" + '<b>' + i + '</b>' + "</td>"  // PAYMENT no.
+
+                            if (i === yearAndMonth) {
+                                content += "<td>" + "<b>" + totalAmountRata.toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + "<b>" + ((returnAmountWithInteres - parseFloat(totalLoan)) / yearAndMonth).toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + "<b>" + totalInterestTable.toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + "<b>" + balanceLeft.toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                            } else {
+                                content += "<td>" + totalAmountRata.toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + ((returnAmountWithInteres - parseFloat(totalLoan)) / yearAndMonth).toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + totalInterestTable.toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + balanceLeft.toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                            }
+
+
+                            content += "</tr>";
+                        }
+
+                        content += "</table>"
+
+                        $('#here_table').append(content);
+
+                        $("#generateTable").hide();
+                        $("#printbutton1").show();
+
+                    })
                 }
 
 
@@ -333,8 +396,8 @@
 
 
                     var principal = parseFloat(amount);
-                    var calculatedInterest = parseFloat(interest)  / 12;
-                    var calculatedPayments = (parseFloat(years) * 12)+customMonth1+customMonth2+customMonth3+customMonth4+customMonth5;
+                    var calculatedInterest = parseFloat(interest) / 12;
+                    var calculatedPayments = (parseFloat(years) * 12) + customMonth1 + customMonth2 + customMonth3 + customMonth4 + customMonth5;
 
 
                     //Calculating the monthly payment
@@ -342,21 +405,75 @@
                     var monthly = (principal * x * calculatedInterest) / (x - 1);
                     var monthlyPayment = monthly.toFixed(2);
 
-                        //calculating the total interest
-                    const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
+                    //calculating the total interest
+                    let totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
 
                     //calculating the total payment
                     const totalPayment = (monthly * calculatedPayments).toFixed(2);
                     //==================================================
-
-
+                    console.log(monthlyInteres)
 
                     $("#totalInteres").val(totalInterest + " Euro");
                     $("#TotalreturnAmtWithInterest").val((totalPayment) + " Euro")
                     $("#monthlyReturnAmt").val((monthlyPayment) + " Euro")
+                    $("#printbutton1").hide();
+                    $("#generateTable").click(function () {
 
+
+                        var content = "<table class='table table-striped'>    <thead>\n" +
+                            "    <tr>\n" +
+                            "      <th style='width: 1.2vw;' scope=\"col\">Payment no.</th>\n" +
+
+                            "      <th scope=\"col\">Total payment</th>\n" +
+                            //  "      <th scope=\"col\">Principal</th>\n" +
+                            "      <th scope=\"col\">Interest</th>\n" +
+                            "      <th scope=\"col\">Total interest</th>\n" +
+                            "      <th scope=\"col\">Balance left</th>\n" +
+                            "    </tr>\n" +
+                            "  </thead> "
+
+                        var totalInterestTable = parseFloat("0");
+                        var balanceLeft = totalPayment
+                        for (i = 1; i <= monthsFromAllCustom; i++) { //krijojm reshta aq sa kemi muaj
+                            // content += '<tr><td >' + '<b>'+  i+' </b>'+ '</td><td>' + "Month" + i + '</td> <td>' + monthlyPayment +"<i>&euro;</i>"+ '</td> <td>' + "Principal" + i + '</td> <td>' + "Interest" + i + '</td> <td>' + "Total Interest" + i + '</td> <td>' + "Balance" + i + '</td></tr>';
+                            content += "<tr>"
+
+
+                            totalInterestTable += parseFloat((totalInterest / monthsFromAllCustom))
+                            balanceLeft -= monthlyPayment
+                            parseFloat(totalInterestTable)
+
+                            content += "<td>" + '<b>' + i + '</b>' + "</td>"  // PAYMENT no.
+
+                            if (i === monthsFromAllCustom) {
+                                content += "<td>" + "<b>" + monthlyPayment + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + "<b>" + (totalInterest / monthsFromAllCustom).toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + "<b>" + totalInterestTable.toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + "<b>" + balanceLeft.toFixed(2) + "<i> &euro; </i>" + "</b>" + "</td>" // INSTALLMENT amount.
+                            } else {
+                                content += "<td>" + monthlyPayment + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + (totalInterest / monthsFromAllCustom).toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + totalInterestTable.toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                                content += "<td>" + balanceLeft.toFixed(2) + "<i> &euro;</i>" + "</td>" // INSTALLMENT amount.
+                            }
+
+
+                            content += "</tr>";
+                        }
+                        content += "</table>"
+
+                        $('#here_table').append(content);
+
+                            $("#generateTable").hide();
+                            $("#printbutton1").show();
+
+                    })
+
+
+                    // $("#prin")
 
                 }
+
 
                 $("#calculateAgain").click(function () {
                     location.reload()
@@ -539,6 +656,12 @@
 
         }
 
+        @media print {
+            .noPrint {
+                display: none;
+            }
+        }
+
         .input-group-text:focus {
             color: #212529;
             background-color: #fff;
@@ -559,91 +682,95 @@
 <body>
 
 <div class="container ">
-    <br>
-    <div class="row text-end">
-        <div class="col">
-            <label for="gjuha">Change Language</label><br>
+    <div class="info noPrint">
+        <br>
+        <div class="row text-end noPrint">
+            <div class="col">
+                <label for="gjuha">Change Language</label><br>
 
-            <select name="gjuha" id="gjuha">
-                <option value="bosh">English</option>
-                <option id="shqip" value="1"> Shqip</option>
-                <option id="maqedonisht" value="2"> Македонски</option>
-            </select>
-        </div>
-
-    </div>
-    <br>
-
-    <div class="row text-center">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-12">
-            <div class="display-6">Bank Loan Calculator</div>
-        </div>
-    </div>
-    <br>
-    <div class="row  ">
-        <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-            <p class="display-6 custom">Insert loan amount</p>
-        </div>
-        <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
-            <div class="input-group mb-3 text-end">
-
-                <input type="number" class="form-control" id="totalLoan" aria-label="Amount (to the nearest dollar)"
-                       placeholder="1000"
-                       max="10">
-                <span class="input-group-text euro" style="background-color: lightgray">	&euro;</span>
-
-                <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                <select name="gjuha" id="gjuha">
+                    <option value="bosh">English</option>
+                    <option id="shqip" value="1"> Shqip</option>
+                    <option id="maqedonisht" value="2"> Македонски</option>
+                </select>
             </div>
-        </div>
-    </div>
-    <hr style="width: 35vw; margin: auto">
-    <div class="form-check form-switch " style="margin: auto">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault"><span
-                id="switchCheck"> Varible interes percentage</span></label>
-    </div>
-    <div class="row " id="yearMonthInputs">
-        <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
-            <p class="display-6 custom">Insert total number of installments by months <i><u>or</u></i> by years</p>
-        </div>
-        <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
-            <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years">
-            <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months">
 
         </div>
         <br>
 
-    </div>
-    <br>
-    <hr>
-    <br>
-
-    <div id="fixedInteres">
-
-        <div class="row text-center">
-            <div class="col-">
-                <div class="display-6">Fixed Interes Percentage</div>
+        <div class="row text-center noPrint">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-12">
+                <div class="display-6">Bank Loan Calculator</div>
             </div>
         </div>
-        <div class="row  ">
+        <br>
+        <div class="row  noPrint">
             <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
-                <p class="display-6 custom">Interest percentage</p>
+                <p class="display-6 custom">Insert loan amount</p>
             </div>
-
-            <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+            <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end noPrint"><br>
                 <div class="input-group mb-3 text-end">
-                    <input type="text" class="form-control" id="interest" aria-label="Amount (to the nearest dollar)"
-                           placeholder="%"
+
+                    <input type="number" class="form-control" id="totalLoan" aria-label="Amount (to the nearest dollar)"
+                           placeholder="1000"
                            max="10">
-                    <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                    <span class="input-group-text euro" style="background-color: lightgray">	&euro;</span>
+
                     <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
                 </div>
             </div>
         </div>
+        <hr style="width: 35vw; margin: auto">
+        <div class="form-check form-switch " style="margin: auto">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault"><span
+                    id="switchCheck"> Varible interes percentage</span></label>
+        </div>
+        <div class="row noPrint " id="yearMonthInputs">
+            <div class="col-sm-7 col-md-7 col-lg-7 col-12 "><br>
+                <p class="display-6 custom">Insert total number of installments by months <i><u>or</u></i> by years</p>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5 col-12 text-end  "><br>
+                <input type="number" min="0" placeholder="Number of years" class="input-group-text C" id="years">
+                <input type="number" min="0" placeholder="Number of months" class="input-group-text C" id="months">
+
+            </div>
+            <br>
+
+        </div>
+        <br>
+        <hr>
+        <br>
+
+        <div id="fixedInteres">
+
+            <div class="row text-center ">
+                <div class="col-">
+                    <div class="display-6">Fixed Interes Percentage</div>
+                </div>
+            </div>
+            <div class="row noPrint  ">
+                <div class="col-sm-7 col-md-7 col-lg-9 col-12"><br>
+                    <p class="display-6 custom">Interest percentage</p>
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-3 col-12 text-end"><br>
+                    <div class="input-group mb-3 text-end">
+                        <input type="text" class="form-control" id="interest"
+                               aria-label="Amount (to the nearest dollar)"
+                               placeholder="%"
+                               max="10">
+                        <span class="input-group-text euro" style="background-color: lightgray">%</span>
+                        <!--            <input type="number" min="0" placeholder="Insert number" id="totalLoan" class="input-group-text" >-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
-    <div id="customKamata">
+    <div id="customKamata" class="noPrint">
         <br>
         <div class="row text-center ">
             <div class="col-">
@@ -830,17 +957,17 @@
 
         </div>
         <br><br>
-        <div class="row d-flex justify-content-center">
+        <!--        <div class="row d-flex justify-content-center">-->
 
-            <div class="col-sm-6 col-md-6 col-lg-6 col-8 d-flex  justify-content-center"><br>
-                <button class="btn btn-outline-secondary " id="addAnother">Add custom installment
-                    period
-                </button>
-                <br><br>
+        <!--            <div class="col-sm-6 col-md-6 col-lg-6 col-8 d-flex  justify-content-center"><br>-->
+        <!--                <button class="btn btn-outline-secondary " id="addAnother">Add custom installment-->
+        <!--                    period-->
+        <!--                </button>-->
+        <!--                <br><br>-->
 
-            </div>
+        <!--            </div>-->
 
-        </div>
+        <!--        </div>-->
 
 
     </div>
@@ -887,21 +1014,39 @@
             </div>
         </div>
         <br><br>
+        <div class="row">
+            <div id="here_table">
+
+            </div>
+        </div>
         <div class="row d-flex justify-content-center">
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex justify-content-center"><br>
-                <button class="btn btn-outline-secondary " id="calculateAgain">Calculate again
+                <button class="btn btn-outline-secondary noPrint " id="calculateAgain">Calculate again
                 </button>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex  justify-content-center"><br>
-                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print
+                <button class="btn btn-outline-secondary " id="generateTable">Generate Loan Amortization table
+                </button>
+                <button onclick="window.print()" class="btn btn-outline-secondary noPrint" id="printbutton1">Download / print
                     report
                 </button>
                 <br><br>
 
             </div>
 
+
         </div>
+        <br><br>
+<!--        <div class="row d-flex justify-content-center">-->
+<!--            <div class="col-sm-6 col-md-6 col-lg-6 col-12 d-flex  justify-content-center"><br>-->
+<!--                <button onclick="window.print()" class="btn btn-outline-secondary " id="printbutton1">Print-->
+<!--                    report-->
+<!--                </button>-->
+<!--                <br><br>-->
+
+<!--            </div>-->
+<!--        </div>-->
         <br><br>
 
     </div>
